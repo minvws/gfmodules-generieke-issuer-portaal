@@ -1,0 +1,22 @@
+@use "manon";
+
+// Toggle between the two themes
+// START Rijksoverheid Theme
+@use "@minvws/nl-rdo-rijksoverheid-ui-theme" with (
+    // You can choose colors from: https://minvws.github.io/nl-rdo-rijksoverheid-ui-theme/html_examples/colors.html
+    $brand-color: "light-blue",
+    $font-path: "@minvws/nl-rdo-rijksoverheid-ui-theme/fonts",
+    $img-path: "@minvws/nl-rdo-rijksoverheid-ui-theme/img"
+);
+@use "@minvws/nl-rdo-rijksoverheid-ui-theme/components";
+@use "@minvws/nl-rdo-rijksoverheid-ui-theme/icons-extended";
+// END Rijksoverheid Theme
+
+ //Start Manon Theme
+//@use "@minvws/manon-themes/basic-bold" with (
+//  $font-path: "@minvws/manon-themes/basic-bold/fonts"
+//);
+// End Manon Theme
+
+@use "styling/breadcrumb-bar";
+@use "components/external-login";
