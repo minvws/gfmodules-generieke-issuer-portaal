@@ -21,6 +21,15 @@ services:
             - '.:/var/www/html'
         networks:
             - sail
+    issuer-api:
+        image: docker.io/waltid/issuer-api:0.12.0
+#        pull_policy: always
+        ports:
+            - "8497:8497"
+        env_file:
+            - ./docker/.env
+        volumes:
+            - ./docker/issuer-api/config:/waltid-issuer-api/config
 
 networks:
     sail:
