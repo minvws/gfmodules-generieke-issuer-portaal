@@ -10,8 +10,7 @@ class FlowState
 {
     public function __construct(
         protected ?UziUser $user = null,
-        protected ?ConsentData $consentData = null,
-        protected ?AuthorizationData $authorizationData = null,
+        protected ?CredentialData $credentialData = null,
     ) {
     }
 
@@ -20,18 +19,13 @@ class FlowState
         return $this->user;
     }
 
-    public function getConsentData(): ?ConsentData
+    public function getCredentialData(): ?CredentialData
     {
-        return $this->consentData;
-    }
-
-    public function getAuthorizationData(): ?AuthorizationData
-    {
-        return $this->authorizationData;
+        return $this->credentialData;
     }
 
     public function isFlowComplete(): bool
     {
-        return $this->user && $this->consentData && $this->authorizationData;
+        return $this->user && $this->credentialData;
     }
 }

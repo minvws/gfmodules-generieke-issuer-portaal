@@ -22,11 +22,9 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', IndexController::class)->name('index');
 Route::get('/flow', [FlowController::class, 'index'])->name('flow');
-Route::post('/flow', [FlowController::class, 'retrieveTimeline'])->name('flow.retrieve-timeline');
-Route::get('/flow/consent', [FlowController::class, 'editConsent'])->name('flow-consent');
-Route::post('/flow/consent', [FlowController::class, 'storeConsent'])->name('flow-consent.store');
-Route::get('/flow/authorization', [FlowController::class, 'editAuthorization'])->name('flow-authorization');
-Route::post('/flow/authorization', [FlowController::class, 'storeAuthorization'])->name('flow-authorization.store');
+Route::post('/flow', [FlowController::class, 'retrieveCredential'])->name('flow.retrieve-timeline');
+Route::get('/flow/credential', [FlowController::class, 'editCredentialData'])->name('flow-credential');
+Route::post('/flow/credential', [FlowController::class, 'storeCredentialData'])->name('flow-credential.store');
 
 if (config('auth.digid_mock_enabled')) {
     Route::get('oidc/login', [DigidMockController::class, 'login'])->name('oidc.login');
