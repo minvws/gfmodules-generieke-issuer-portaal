@@ -6,32 +6,18 @@ namespace App\Dto;
 
 class CredentialData
 {
-    protected ?string $bsn = null;
-    protected ?string $birthYear = null;
-    protected bool $consent = false;
-
     public function __construct(
-        ?string $bsn = null,
-        ?string $birthYear = null,
-        bool $consent = false
+        protected ?string $subject = null,
     ) {
-        $this->bsn = $bsn;
-        $this->birthYear = $birthYear;
-        $this->consent = $consent;
     }
 
-    public function getBsn(): ?string
+    public function getSubject(): ?string
     {
-        return $this->bsn;
+        return $this->subject;
     }
 
-    public function getBirthYear(): ?string
+    public function getSubjectAsArray(): array
     {
-        return $this->birthYear;
-    }
-
-    public function getConsent(): bool
-    {
-        return $this->consent;
+        return json_decode($this->subject, true, 512, JSON_THROW_ON_ERROR);
     }
 }

@@ -6,6 +6,7 @@ namespace App\Http\Controllers;
 
 use App\Dto\CredentialData;
 use App\Http\Requests\FlowCredentialDataRequest;
+use App\Models\UziUser;
 use App\Services\FlowStateService;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
@@ -28,7 +29,7 @@ class FlowController extends Controller
             return redirect()->route('flow');
         }
 
-        return redirect()->route('timeline.fetch');
+        return redirect()->route('credential.issuance');
     }
 
     public function editCredentialData(): View
@@ -39,8 +40,7 @@ class FlowController extends Controller
     public function storeCredentialData(FlowCredentialDataRequest $request): RedirectResponse
     {
         $data = new CredentialData(
-            bsn: $request->validated('bsn'),
-            consent: $request->validated('consent') ? true : false,
+            subject: $request->validated('subject'),
         );
         $this->stateService->setCredentialDataInSession($data);
 
@@ -54,6 +54,23 @@ class FlowController extends Controller
         return view('flow.index')
             ->with('state', $state)
             ->with('editCredential', $editCredentialData)
-            ->with('editAuthorization', $editAuthorization);
+            ->with('editAuthorization', $editAuthorization)
+            ->with('defaultCredentialSubject', $this->getDefaultCredentialSubject($state->getUser()));
+    }
+
+    protected function getDefaultCredentialSubject(?UziUser $uziUser = null): string
+    {
+        $firstUra = $uziUser?->uras[0] ?? null;
+
+        $data = [
+            "initials" => $uziUser->initials ?? '',
+            "surname_prefix" => $uziUser->surnamePrefix ?? null,
+            "surname" => $uziUser->surname ?? '',
+            "uzi_id" => $uziUser->uziId ?? '',
+            "ura" => $firstUra->ura ?? '',
+            "roles" => implode(',', $firstUra?->roles ?? [])
+        ];
+
+        return json_encode($data, JSON_THROW_ON_ERROR | JSON_PRETTY_PRINT);
     }
 }

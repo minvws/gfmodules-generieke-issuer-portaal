@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Http\Requests;
 
-use App\Rules\BsnRule;
 use Illuminate\Foundation\Http\FormRequest;
 
 class FlowCredentialDataRequest extends FormRequest
@@ -22,12 +21,10 @@ class FlowCredentialDataRequest extends FormRequest
      *
      * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
      */
-    public function rules(BsnRule $rule): array
+    public function rules(): array
     {
         return [
-            'bsn' => ['required', 'min:8', 'max:9', $rule],
-//            'birthyear' => ['required'],
-            'consent' => ['required', 'accepted'],
+            'subject' => ['required', 'json'],
         ];
     }
 }
