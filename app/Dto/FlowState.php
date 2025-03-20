@@ -26,6 +26,6 @@ class FlowState
 
     public function isFlowComplete(): bool
     {
-        return $this->user && $this->credentialData;
+        return $this->user && $this->credentialData && $this->credentialData->getSubject() && $this->credentialData->getSubjectAsArray();
     }
 }
