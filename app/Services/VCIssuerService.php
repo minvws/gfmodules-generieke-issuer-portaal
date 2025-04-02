@@ -4,8 +4,11 @@ declare(strict_types=1);
 
 namespace App\Services;
 
+use App\Attributes\JWK as JWKAttribute;
 use Illuminate\Container\Attributes\Config;
 use Illuminate\Support\Facades\Http;
+use Jose\Component\Core\JWK;
+use JsonException;
 use RuntimeException;
 
 class VCIssuerService
@@ -15,8 +18,10 @@ class VCIssuerService
         protected string $issuerName,
         #[Config('issuer.url')]
         protected string $issuerUrl,
-        #[Config('issuer.did')]
-        protected string $issuerDid,
+        #[JWKAttribute('issuer.private_key_path')]
+        protected JWK $privateKey,
+        #[Config('issuer.custom_did')]
+        protected ?string $issuerCustomDid = null,
     ) {
     }
 
@@ -44,6 +49,7 @@ class VCIssuerService
     /**
      * @param array<string, mixed> $subject
      * @return array<string, mixed> POST data for the issuer API
+     * @throws JsonException
      */
     protected function buildIssueBody(array $subject): array
     {
@@ -59,30 +65,12 @@ class VCIssuerService
 
         return [
             // Verplicht, moet je zelf matchen met issuer key
-            "issuerDid" => $this->issuerDid,
+            "issuerDid" => $this->issuerCustomDid ?? $this->calculateDidJwkFromJwk($this->privateKey),
 
             // Verplicht - JWK met private key
             "issuerKey" => [
                 "type" => "jwk",
-                "jwk" =>
-//                    [
-//                        "kty" => "EC",
-//                        "d" => "8jH4vwtvCw6tcBzdxQ6V7FY2L215lBGm-x3flgENx4Y",
-//                        "crv" => "P-256",
-//                        "kid" => "3YNd9Fnx9JlyPVYwgWFE37E3GwI0eGlCK8wFlWxGfpM",
-//                        "x" => "FovY21LAAOTlg-m-NeKWhZEL5aFrnR0ucJjD5TKpGug",
-//                        "y" => "CrFJfGTdP29JJccpQXuyMO3ohtzrTqPzBPBITYj0ogA"
-//                    ]
-                    [ // Test key, online generated
-                        "kty" => "EC",
-                        "d" => "_AKZByJAaftlLoN4Tnt0I8LMOydxAUhnpg26E06jwbU",
-                        "use" => "sig",
-                        "crv" => "P-256",
-                        "kid" => "WGVFvVHQt2hqEUYOGckAasBULWMnG6BqpsCmTwDfOI0",
-                        "x" => "9XKecxm8bB897JgPV5QHFoyy04kKfFsV3uFI2VUVReg",
-                        "y" => "6flsjsQUgT5UDoSKGGfTkeqvIcTnK13yKzo1X0Vll5w",
-                        "alg" => "ES256"
-                    ]
+                "jwk" => $this->privateKey->jsonSerialize(),
             ],
 
             // Credential configuration id overeenkomend met credential-issuer-metadata.conf
@@ -124,5 +112,16 @@ class VCIssuerService
             ],
             "authenticationMethod" => "PRE_AUTHORIZED",
         ];
+    }
+
+    /**
+     * @throws JsonException
+     */
+    protected function calculateDidJwkFromJwk(JWK $jwk): string
+    {
+        $publicKey = $jwk->toPublic()->jsonSerialize();
+
+        $json = json_encode($publicKey, JSON_THROW_ON_ERROR | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
+        return 'did:jwk:' . base64_encode($json);
     }
 }

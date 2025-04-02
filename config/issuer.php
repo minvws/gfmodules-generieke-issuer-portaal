@@ -8,7 +8,7 @@ return [
 
     'url' => env('ISSUER_URL', 'http://host.docker.internal:8497'),
 
-    'did' => env('ISSUER_DID', 'did:example:123456789abcdefghi'),
+    'custom_did' => env('ISSUER_CUSTOM_DID'),
 
     /**
      * The path to the private key used to sign the verifiable credentials.
