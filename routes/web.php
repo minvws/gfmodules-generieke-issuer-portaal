@@ -3,7 +3,6 @@
 declare(strict_types=1);
 
 use App\Http\Controllers\Auth\LogoutController;
-use App\Http\Controllers\CredentialIssuanceController;
 use App\Http\Controllers\FlowController;
 use App\Http\Controllers\IndexController;
 use App\Http\Controllers\Auth\DigidMockController;

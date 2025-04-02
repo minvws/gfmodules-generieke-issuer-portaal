@@ -17,8 +17,7 @@ class FlowController extends Controller
     public function __construct(
         protected FlowStateService $stateService,
         protected VCIssuerService $issuerService,
-    )
-    {
+    ) {
     }
 
     public function index(): View
@@ -80,7 +79,7 @@ class FlowController extends Controller
             "surname" => $uziUser->surname ?? '',
             "uzi_id" => $uziUser->uziId ?? '',
             "ura" => $firstUra->ura ?? '',
-            "roles" => implode(',', $firstUra?->roles ?? [])
+            "roles" => implode(',', $firstUra?->getRoleCodes() ?? []),
         ];
 
         return json_encode($data, JSON_THROW_ON_ERROR | JSON_PRETTY_PRINT);

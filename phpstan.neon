@@ -12,5 +12,3 @@ parameters:
     excludePaths:
         - public/index.php
         - routes/console.php
-    ignoreErrors:
-        - identifier: missingType.iterableValue

@@ -20,7 +20,7 @@ class UziRelation
 
     public function getVisibleRoleNames(): string
     {
-        return implode(', ', array_map(fn($role) => $role->name, $this->roles));
+        return implode(', ', array_map(static fn($role) => $role->name, $this->roles));
     }
 
     /**
@@ -28,6 +28,6 @@ class UziRelation
      */
     public function getRoleCodes(): array
     {
-        return array_map(fn($role) => $role->code, $this->roles);
+        return array_map(static fn($role) => $role->code, $this->roles);
     }
 }

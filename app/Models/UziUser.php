@@ -189,4 +189,9 @@ class UziUser implements Authenticatable
     {
         return count($this->uras) > 0;
     }
+
+    public function getAuthPasswordName(): string
+    {
+        throw new RuntimeException("Uzi users can't have a password");
+    }
 }
