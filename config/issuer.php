@@ -6,7 +6,7 @@ return [
 
     'name' => env('ISSUER_NAME', 'Example Issuer'),
 
-    'url' => env('ISSUER_URL', 'http://host.docker.internal:8497'),
+    'url' => env('ISSUER_URL', 'http://issuer-api:8497'),
 
     'custom_did' => env('ISSUER_CUSTOM_DID'),
 

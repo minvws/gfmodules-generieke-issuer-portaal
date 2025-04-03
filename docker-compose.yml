@@ -30,6 +30,8 @@ services:
             - ./docker/.env
         volumes:
             - ./docker/issuer-api/config:/waltid-issuer-api/config
+        networks:
+            - sail
 
 networks:
     sail:
