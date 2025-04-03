@@ -9,6 +9,7 @@ use Illuminate\Container\Attributes\Config;
 use Illuminate\Container\Container;
 use Illuminate\Contracts\Container\BindingResolutionException;
 use Illuminate\Contracts\Container\ContextualAttribute;
+use Illuminate\Support\Str;
 use Jose\Component\KeyManagement\JWKFactory;
 
 #[Attribute(Attribute::TARGET_PARAMETER)]
@@ -36,10 +37,14 @@ class JWK implements ContextualAttribute
             throw new BindingResolutionException('Configuration value not found for key: ' . $attribute->key);
         }
 
-        if (!file_exists($privateKeyPath)) {
+        $absolutePrivateKeyPath = Str::startsWith($privateKeyPath, DIRECTORY_SEPARATOR) ?
+            $privateKeyPath :
+            base_path($privateKeyPath);
+
+        if (!file_exists($absolutePrivateKeyPath)) {
             throw new BindingResolutionException('Private key file not found at path: ' . $privateKeyPath);
         }
 
-        return JWKFactory::createFromKeyFile($privateKeyPath);
+        return JWKFactory::createFromKeyFile($absolutePrivateKeyPath);
     }
 }
