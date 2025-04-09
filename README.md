@@ -1,4 +1,6 @@
-Auto-generated README for gfmodules-generieke-issuer-portaal-private
+# Generic VC Issuer
+
+PoC application to issue Verifiable Credentials.
 
 ## Development setup
 
@@ -7,28 +9,24 @@ Requirements:
 - composer
 - npm
 
-Run the following commands to run this application in docker using ```sail```.
-
-
+Run the following commands to run this application.
 
 ```bash
+cp .env.example .env
 composer install
+php artisan key:generate
 npm install
 npm run build
 vendor/bin/sail up -d
-vendor/bin/sail artisan key:generate
 ```
 
-It is possible to generate an EC key using:
+It is possible to generate an EC key for VC signing using:
 
 ```bash
-openssl ecparam -name prime256v1 -genkey -noout -out key.pem
-```
-or:
+openssl ecparam -name prime256v1 -genkey -noout -out secrets/key.pem
 
-```bash
-# Currently not able to load the key
-openssl ecparam -name secp256k1 -genkey -noout -out key.pem
+# Currently not able to load the key with secp256k1
+#openssl ecparam -name secp256k1 -genkey -noout -out key.pem
 ```
 
 The application is available at http://localhost:8600/flow.
@@ -40,7 +38,6 @@ It is possible to test the connection to the Issuer API using the following comm
 ```bash
 sail artisan app:make-credential
 ```
-
 
 ## External services
 
