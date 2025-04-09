@@ -76,6 +76,9 @@ class VCIssuerService
             // Credential configuration id overeenkomend met credential-issuer-metadata.conf
             "credentialConfigurationId" => "MijnGeneriekeCredential_jwt_vc_json",
 
+            ## TODO: Check sd-jwt
+            #"credentialConfigurationId" => "MijnGeneriekeCredential_vc+sd-jwt",
+
             // Data van de credential
             "credentialData" => [
                 "@context" => [

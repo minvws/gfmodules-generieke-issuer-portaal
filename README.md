@@ -31,8 +31,9 @@ or:
 openssl ecparam -name secp256k1 -genkey -noout -out key.pem
 ```
 
-The application is available at http://localhost:8498/flow.
+The application is available at http://localhost:8600/flow.
 
+The wallet is available at http://localhost:8610.
 
 It is possible to test the connection to the Issuer API using the following command:
 
@@ -48,19 +49,4 @@ The VC issuer uses external opensource services to issue credentials. The follow
 - [Issuer API](https://github.com/walt-id/waltid-identity/tree/main/waltid-services/waltid-issuer-api)
 - [Verifier API](https://github.com/walt-id/waltid-identity/tree/main/waltid-services/waltid-verifier-api)
 - [Dev Wallet](https://github.com/walt-id/waltid-identity/tree/main/waltid-applications/waltid-web-wallet)
-  - [Wallet API](https://github.com/walt-id/waltid-identity/tree/main/waltid-services/waltid-wallet-api)  
-
-
-## Wallet
-
-To store the credentials, a wallet is needed.
-
-It is possible to setup a development wallet using the following command:
-
-```bash
-git clone git@github.com/walt-id/waltid-identity.git && cd waltid-identity
-cd docker-compose && docker compose --profile apps --profile services up
-```
-
-After this the wallet is available at http://localhost:7101.
-
+  - [Wallet API](https://github.com/walt-id/waltid-identity/tree/main/waltid-services/waltid-wallet-api)
