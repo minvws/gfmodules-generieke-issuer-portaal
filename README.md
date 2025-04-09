@@ -1,6 +1,7 @@
 # Generic VC Issuer
 
 PoC application to issue Verifiable Credentials.
+NOTE: This is a Proof of Concept application and not intended for production use.
 
 ## Development setup
 
