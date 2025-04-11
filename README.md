@@ -60,9 +60,10 @@ The VC issuer uses external opensource services to issue credentials. The follow
 The application is able to issue credentials using the Issuer API of walt.id and
 it is possible to load the credential in the walt.id dev wallet.
 
-There is nu support for revocation of credentials yet.
-It would be possible to revoke credentials by using external status services.
+The current implementation issues JSON-LD credentials that are secured with JOSE. This is based on the [Securing Verifiable Credentials using JOSE and COSE](https://www.w3.org/TR/vc-jose-cose/#securing-with-jose) specification.
+The used Issuer API also supports SD-JWT credentials.
 
-## External status services
-
-... 
+The opensource walt.id stack that is used has no support for revocation of credentials yet. See also https://github.com/walt-id/waltid-identity/issues/991. 
+It would be possible to set credential statuses by using an external status services, like:
+- https://github.com/digitalcredentials/status-service-db
+- https://github.com/eu-digital-identity-wallet/eudi-srv-statuslist-py
