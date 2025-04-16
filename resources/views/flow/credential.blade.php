@@ -14,7 +14,7 @@
         <div>
             <h1>Credential uitgeven</h1>
 
-            {{ $issuanceUrl }}
+            <input value="{{ $issuanceUrl }}"/>
         </div>
     </section>
 @endsection
