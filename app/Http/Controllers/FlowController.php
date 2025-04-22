@@ -6,7 +6,6 @@ namespace App\Http\Controllers;
 
 use App\Dto\CredentialData;
 use App\Http\Requests\FlowCredentialDataRequest;
-use App\Models\UziUser;
 use App\Services\FlowStateService;
 use App\Services\VCIssuerService;
 use Illuminate\Contracts\View\View;
@@ -66,20 +65,13 @@ class FlowController extends Controller
             ->with('state', $state)
             ->with('editCredential', $editCredentialData)
             ->with('editAuthorization', $editAuthorization)
-            ->with('defaultCredentialSubject', $this->getDefaultCredentialSubject($state->getUser()));
+            ->with('defaultCredentialSubject', $this->getDefaultCredentialSubject());
     }
 
-    protected function getDefaultCredentialSubject(?UziUser $uziUser = null): string
+    protected function getDefaultCredentialSubject(): string
     {
-        $firstUra = $uziUser?->uras[0] ?? null;
-
         $data = [
-            "initials" => $uziUser->initials ?? '',
-            "surname_prefix" => $uziUser->surnamePrefix ?? null,
-            "surname" => $uziUser->surname ?? '',
-            "uzi_id" => $uziUser->uziId ?? '',
-            "ura" => $firstUra->ura ?? '',
-            "roles" => implode(',', $firstUra?->getRoleCodes() ?? []),
+            "organization_code" => '12341234'
         ];
 
         return json_encode($data, JSON_THROW_ON_ERROR | JSON_PRETTY_PRINT);

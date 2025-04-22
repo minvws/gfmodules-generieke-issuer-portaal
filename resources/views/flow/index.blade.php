@@ -20,29 +20,18 @@
                             id="flow-identification-authentication">1. Identificatie en Authenticatie
                     </button>
                     <div aria-labelledby="flow-identification-authentication">
-                        @if(!$state->getUser())
-                            <ul class="external-login">
-                                <li>
-                                    <a href="{{ route('oidc.login') }}">
-                                        <img src="{{ asset('img/signin-method-logo.png') }}" alt="" rel="external">
-                                        @lang('Login with') Dezi-online
-                                    </a>
-                                </li>
-                            </ul>
-                        @else
-                            <p>Je bent ingelogd als: {{ $state->getUser()->getName() }}</p>
-                        @endif
+                        <p>Je bent ingelogd.</p>
                     </div>
                 </li>
                 <li>
-                    <button aria-expanded="{{ $state->getUser() ? "true" : "false" }}" id="flow-credential">2.
+                    <button aria-expanded="{{ $state->getCredentialData() ? "true" : "false" }}" id="flow-credential">2.
                         Credential
                     </button>
                     <div aria-labelledby="flow-credential">
                         @if(!$state->getCredentialData() || $editCredential)
                             <form action="{{ route('flow-credential.store') }}" method="POST">
                                 @csrf
-                                <fieldset {{ !$state->getUser() ? "disabled" : "" }}>
+                                <fieldset>
                                     <p>Geef hier je eigen credential uit.</p>
                                     <div>
                                         <label for="flow-credential-subject">Attributen</label>
