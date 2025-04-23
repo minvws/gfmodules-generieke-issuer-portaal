@@ -6,7 +6,7 @@
     "require": {
         "php": "^8.3.0",
         "guzzlehttp/guzzle": "^7.8",
-        "jumbojett/openid-connect-php": "1.0.1",
+        "jumbojett/openid-connect-php": "1.0.2",
         "laravel/framework": "^v11.16",
         "laravel/tinker": "^2.8",
         "minvws/openid-connect-php-laravel": "^0.3.0",
