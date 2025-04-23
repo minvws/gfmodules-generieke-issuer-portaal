@@ -1,0 +1,42 @@
+.external-login {
+    gap: 1rem;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    padding-left: 0;
+
+    --link-text-color: #000000;
+    --link-visited-icon-text-color: var(--link-text-color);
+    --link-hover-icon-text-color: var(--link-text-color);
+    --link-active-icon-text-color: var(--link-text-color);
+    --link-focus-icon-text-color: var(--link-text-color);
+
+    li {
+        background-color: #fff;
+        list-style: none;
+        min-width: 17rem;
+        padding: 0;
+
+        a {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+            justify-self: flex-start;
+            width: 100%;
+            height: 100%;
+            font-weight: bold;
+            color: #000;
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            box-sizing: border-box;
+
+            img {
+                width: 3.75rem;
+            }
+
+            &[rel~="external"]:before {
+                display: none;
+            }
+        }
+    }
+}

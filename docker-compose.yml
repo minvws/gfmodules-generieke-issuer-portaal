@@ -1,0 +1,100 @@
+services:
+    laravel.test:
+        build:
+            context: ./vendor/laravel/sail/runtimes/8.3
+            dockerfile: Dockerfile
+            args:
+                WWWGROUP: '${WWWGROUP}'
+        image: sail-8.3/app
+        extra_hosts:
+            - 'host.docker.internal:host-gateway'
+        ports:
+            - '8600:80'
+            - '${VITE_PORT:-5198}:${VITE_PORT:-5198}'
+        environment:
+            WWWUSER: '${WWWUSER}'
+            LARAVEL_SAIL: 1
+            XDEBUG_MODE: '${SAIL_XDEBUG_MODE:-off}'
+            XDEBUG_CONFIG: '${SAIL_XDEBUG_CONFIG:-client_host=host.docker.internal}'
+        volumes:
+            - '.:/var/www/html'
+        networks:
+            - sail
+
+    issuer-api:
+        image: docker.io/waltid/issuer-api:${WALTID_VERSION_TAG:-latest}
+        ports:
+            - '${WALTID_ISSUER_API_PORT}:${WALTID_ISSUER_API_PORT}'
+        environment:
+            ISSUER_API_PORT: $WALTID_ISSUER_API_PORT
+        volumes:
+            - ./docker/issuer-api/config:/waltid-issuer-api/config
+        networks:
+            - sail
+
+    wallet-api:
+        image: docker.io/waltid/wallet-api:${WALTID_VERSION_TAG:-latest}
+        depends_on:
+            wallet-api-db:
+                condition: service_healthy
+        environment:
+            DB_NAME: '${WALTID_DB_NAME}'
+            DB_USERNAME: '${WALTID_DB_USERNAME}'
+            DB_PASSWORD: '${WALTID_DB_PASSWORD}'
+            POSTGRES_DB_PORT: 5432
+            WALLET_BACKEND_PORT: '${WALTID_WALLET_BACKEND_PORT}'
+        volumes:
+            - ./docker/wallet-api/config:/waltid-wallet-api/config
+            - ./docker/wallet-api/walt.yaml:/waltid-wallet-api/walt.yaml
+            - ./docker/wallet-api/data:/waltid-wallet-api/data
+        networks:
+            - sail
+
+    waltid-dev-wallet:
+        image: docker.io/waltid/waltid-dev-wallet:${WALTID_VERSION_TAG:-latest}
+        depends_on:
+            - wallet-api
+        environment:
+            NUXT_PUBLIC_ISSUER_CALLBACK_URL: "http://localhost:$WALTID_DEV_WALLET_FRONTEND_PORT"
+            PORT: $WALTID_DEV_WALLET_FRONTEND_PORT
+        networks:
+            - sail
+
+    wallet-api-db:
+        image: postgres
+        healthcheck:
+            test: [ "CMD", "pg_isready", "-q", "-U", "${WALTID_DB_USERNAME}" ]
+            interval: 5s
+            timeout: 1s
+            retries: 5
+        restart: always
+        environment:
+            POSTGRES_USER: '${WALTID_DB_USERNAME}'
+            POSTGRES_PASSWORD: '${WALTID_DB_PASSWORD}'
+            POSTGRES_DB: '${WALTID_DB_NAME}'
+            PGDATA: "/waltid-wallet-api/data"
+        volumes:
+            - wallet-api-db:/waltid-wallet-api/data
+        networks:
+            - sail
+
+    caddy:
+        image: docker.io/caddy:2
+        ports:
+            - "$WALTID_WALLET_BACKEND_PORT:$WALTID_WALLET_BACKEND_PORT"
+            - "$WALTID_DEV_WALLET_FRONTEND_PORT:$WALTID_DEV_WALLET_FRONTEND_PORT"
+        environment:
+            WALLET_BACKEND_PORT: $WALTID_WALLET_BACKEND_PORT
+            DEV_WALLET_FRONTEND_PORT: $WALTID_DEV_WALLET_FRONTEND_PORT
+        volumes:
+            - ./docker/Caddyfile:/etc/caddy/Caddyfile
+        networks:
+            - sail
+
+volumes:
+    wallet-api-db:
+
+networks:
+    sail:
+        driver: bridge
+

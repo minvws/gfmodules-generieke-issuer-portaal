@@ -1,0 +1,81 @@
+{
+    "name": "minvws/gfmodules-generic-vc-issuer",
+    "type": "project",
+    "description": "GFModules Generic VC Issuer",
+    "license": "EUPL-1.2",
+    "require": {
+        "php": "^8.3.0",
+        "guzzlehttp/guzzle": "^7.8",
+        "jumbojett/openid-connect-php": "1.0.1",
+        "laravel/framework": "^v11.16",
+        "laravel/tinker": "^2.8",
+        "minvws/openid-connect-php-laravel": "^0.3.0",
+        "web-token/jwt-experimental": "^3.4",
+        "web-token/jwt-library": "^3.4"
+    },
+    "require-dev": {
+        "barryvdh/laravel-debugbar": "^3.14",
+        "barryvdh/laravel-ide-helper": "^3.0",
+        "fakerphp/faker": "^1.23",
+        "jorijn/laravel-security-checker": "^2.4",
+        "larastan/larastan": "^3.0",
+        "laravel/pint": "^1.13",
+        "laravel/sail": "^1.25",
+        "mockery/mockery": "^1.6",
+        "nunomaduro/collision": "^8.1",
+        "phpstan/phpstan": "^2.0",
+        "phpunit/phpunit": "^11.0",
+        "psalm/plugin-laravel": "^3.0",
+        "slevomat/coding-standard": "^8.14",
+        "spatie/laravel-ignition": "^2.0",
+        "squizlabs/php_codesniffer": "^3.7",
+        "vimeo/psalm": "^6.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "App\\": "app/",
+            "Database\\Factories\\": "database/factories/",
+            "Database\\Seeders\\": "database/seeders/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Tests\\": "tests/"
+        }
+    },
+    "scripts": {
+        "post-autoload-dump": [
+            "Illuminate\\Foundation\\ComposerScripts::postAutoloadDump",
+            "@php artisan package:discover --ansi"
+        ],
+        "post-update-cmd": [
+            "@php artisan vendor:publish --tag=laravel-assets --ansi --force"
+        ],
+        "post-root-package-install": [
+            "@php -r \"file_exists('.env') || copy('.env.example', '.env');\""
+        ],
+        "post-create-project-cmd": [
+            "@php artisan key:generate --ansi"
+        ]
+    },
+    "extra": {
+        "laravel": {
+            "dont-discover": [
+            ]
+        }
+    },
+    "config": {
+        "platform": {
+            "php": "8.3.0"
+        },
+        "optimize-autoloader": true,
+        "preferred-install": "dist",
+        "sort-packages": true,
+        "allow-plugins": {
+            "pestphp/pest-plugin": true,
+            "dealerdirect/phpcodesniffer-composer-installer": true
+        }
+    },
+    "minimum-stability": "stable",
+    "prefer-stable": true
+}

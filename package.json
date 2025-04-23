@@ -1,0 +1,21 @@
+{
+    "name": "gfmodules-generic-vc-issuer",
+    "private": true,
+    "type": "module",
+    "scripts": {
+        "dev": "vite",
+        "build": "vite build",
+        "lint": "eslint ."
+    },
+    "devDependencies": {
+        "laravel-vite-plugin": "^1.0.5",
+        "sass": "^1.83.1",
+        "vite": "^6.0.11"
+    },
+    "dependencies": {
+        "@minvws/manon": "^17.0.0-beta.2",
+        "@minvws/manon-themes": "^17.0.0-beta.2",
+        "@minvws/nl-rdo-rijksoverheid-ui-theme": "^0.1.0-beta.3",
+        "eslint": "^9.19.0"
+    }
+}

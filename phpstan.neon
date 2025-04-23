@@ -1,0 +1,14 @@
+includes:
+    - vendor/larastan/larastan/extension.neon
+    - vendor/phpstan/phpstan/conf/bleedingEdge.neon
+parameters:
+    paths:
+        - app
+        - bootstrap
+        - config
+        - public
+        - routes
+    level: 8
+    excludePaths:
+        - public/index.php
+        - routes/console.php
