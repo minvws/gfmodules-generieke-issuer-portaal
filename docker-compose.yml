@@ -61,7 +61,7 @@ services:
             - sail
 
     wallet-api-db:
-        image: postgres
+        image: postgres:17
         healthcheck:
             test: [ "CMD", "pg_isready", "-q", "-U", "${WALTID_DB_USERNAME}" ]
             interval: 5s
