@@ -70,7 +70,6 @@ services:
             interval: 5s
             timeout: 1s
             retries: 5
-        restart: always
         environment:
             POSTGRES_USER: '${WALTID_DB_USERNAME}'
             POSTGRES_PASSWORD: '${WALTID_DB_PASSWORD}'
