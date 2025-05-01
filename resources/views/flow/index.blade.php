@@ -16,15 +16,7 @@
 
             <ul class="accordion">
                 <li>
-                    <button aria-expanded="{{ !$state->getCredentialData() ? "true" : "false" }}"
-                            id="flow-identification-authentication">1. Identificatie en Authenticatie
-                    </button>
-                    <div aria-labelledby="flow-identification-authentication">
-                        <p>Je bent ingelogd.</p>
-                    </div>
-                </li>
-                <li>
-                    <button aria-expanded="{{ $state->getCredentialData() ? "true" : "false" }}" id="flow-credential">2.
+                    <button aria-expanded="true" id="flow-credential">1.
                         Credential
                     </button>
                     <div aria-labelledby="flow-credential">
@@ -69,7 +61,7 @@
                                 </tr>
                                 @endforeach
                             </table>
-                            <a href="{{ route('flow-credential') }}" class="button ghost">Credential wijzigen</a>
+                            <a href="{{ route('flow-credential') }}" class="button ghost">Attributen wijzigen</a>
                         @endif
                     </div>
                 </li>
