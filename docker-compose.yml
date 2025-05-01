@@ -81,6 +81,17 @@ services:
         networks:
             - sail
 
+    verifier-api:
+        image: docker.io/waltid/verifier-api:${WALTID_VERSION_TAG:-latest}
+        ports:
+            - '${WALTID_VERIFIER_API_PORT}:${WALTID_VERIFIER_API_PORT}'
+        environment:
+            VERIFIER_API_PORT: $WALTID_VERIFIER_API_PORT
+        volumes:
+            - ./docker/verifier-api/config:/waltid-verifier-api/config
+        networks:
+            - sail
+
     caddy:
         image: docker.io/caddy:2
         ports:
