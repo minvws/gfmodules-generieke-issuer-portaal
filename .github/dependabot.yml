@@ -17,6 +17,11 @@ updates:
     directory: "/"
     schedule:
       interval: "weekly"
+    groups:
+      version-updates:
+        update-types: ["patch", "minor"]
+        patterns:
+          - "*"
 
   # Maintain dependencies for npm
   - package-ecosystem: "npm"
@@ -26,6 +31,11 @@ updates:
     registries:
       - github-minvws
     open-pull-requests-limit: 5
+    groups:
+      version-updates:
+        update-types: ["patch", "minor"]
+        patterns:
+          - "*"
 
   # Maintain dependencies for Composer
   - package-ecosystem: "composer"
@@ -35,3 +45,8 @@ updates:
     registries:
       - github-minvws
     open-pull-requests-limit: 5
+    groups:
+      version-updates:
+        update-types: ["patch", "minor"]
+        patterns:
+          - "*"
