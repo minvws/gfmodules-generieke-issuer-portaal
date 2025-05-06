@@ -34,9 +34,6 @@ services:
 
     wallet-api:
         image: docker.io/waltid/wallet-api:${WALTID_VERSION_TAG:-latest}
-        depends_on:
-            wallet-api-db:
-                condition: service_healthy
         environment:
             DB_NAME: '${WALTID_DB_NAME}'
             DB_USERNAME: '${WALTID_DB_USERNAME}'
@@ -47,16 +44,22 @@ services:
             - ./docker/wallet-api/config:/waltid-wallet-api/config
             - ./docker/wallet-api/walt.yaml:/waltid-wallet-api/walt.yaml
             - ./docker/wallet-api/data:/waltid-wallet-api/data
+        depends_on:
+            wallet-api-db:
+                condition: service_healthy
+            caddy:
+                condition: service_started
         networks:
             - sail
 
     waltid-dev-wallet:
         image: docker.io/waltid/waltid-dev-wallet:${WALTID_VERSION_TAG:-latest}
-        depends_on:
-            - wallet-api
         environment:
             NUXT_PUBLIC_ISSUER_CALLBACK_URL: "http://localhost:$WALTID_DEV_WALLET_FRONTEND_PORT"
             PORT: $WALTID_DEV_WALLET_FRONTEND_PORT
+        depends_on:
+            - wallet-api
+            - caddy
         networks:
             - sail
 
@@ -67,7 +70,6 @@ services:
             interval: 5s
             timeout: 1s
             retries: 5
-        restart: always
         environment:
             POSTGRES_USER: '${WALTID_DB_USERNAME}'
             POSTGRES_PASSWORD: '${WALTID_DB_PASSWORD}'
@@ -75,6 +77,17 @@ services:
             PGDATA: "/waltid-wallet-api/data"
         volumes:
             - wallet-api-db:/waltid-wallet-api/data
+        networks:
+            - sail
+
+    verifier-api:
+        image: docker.io/waltid/verifier-api:${WALTID_VERSION_TAG:-latest}
+        ports:
+            - '${WALTID_VERIFIER_API_PORT}:${WALTID_VERIFIER_API_PORT}'
+        environment:
+            VERIFIER_API_PORT: $WALTID_VERIFIER_API_PORT
+        volumes:
+            - ./docker/verifier-api/config:/waltid-verifier-api/config
         networks:
             - sail
 
