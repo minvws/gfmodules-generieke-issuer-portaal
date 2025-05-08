@@ -13,7 +13,7 @@ class DummyTest extends TestCase
      *
      * @return void
      */
-    public function testVaccinationEncryptionYubi()
+    public function testVaccinationEncryptionYubi(): void
     {
         $this->assertEquals('DUMMY', 'DUMMY');
     }
