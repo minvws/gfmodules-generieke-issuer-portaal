@@ -58,6 +58,21 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Trusted Hosts
+    |--------------------------------------------------------------------------
+    |
+    | This array contains the hostnames that your application should trust.
+    | These values are used to validate incoming requests and prevent
+    | host header poisoning attacks.
+    |
+    | You can specify the hostnames as a comma-separated list.
+    |
+    */
+
+    'trusted_hosts' => explode(',', env('TRUSTED_HOSTS', 'localhost')),
+
+    /*
+    |--------------------------------------------------------------------------
     | Application Timezone
     |--------------------------------------------------------------------------
     |
