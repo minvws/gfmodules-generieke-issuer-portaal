@@ -171,11 +171,11 @@ return [
             'scheme' => env('REDIS_SCHEME', 'tcp'),
             'url' => env('REDIS_URL'),
             'host' => env('REDIS_HOST', '127.0.0.1'),
-            'username' => env('REDIS_USERNAME', null),
-            'password' => env('REDIS_PASSWORD', null),
+            'username' => env('REDIS_USERNAME'),
+            'password' => env('REDIS_PASSWORD'),
             'port' => env('REDIS_PORT', '6379'),
             'database' => env('REDIS_DB', '0'),
-            // TLS Config for predis
+            // TLS Config for phpredis
             'ssl' => [
                 'peer_name' => env('REDIS_TLS_PEER_NAME', ''),
                 'verify_peer' => env('REDIS_TLS_VERIFY_PEER', true),
@@ -190,11 +190,11 @@ return [
             'scheme' => env('REDIS_SCHEME', 'tcp'),
             'url' => env('REDIS_URL'),
             'host' => env('REDIS_HOST', '127.0.0.1'),
-            'username' => env('REDIS_USERNAME', null),
-            'password' => env('REDIS_PASSWORD', null),
+            'username' => env('REDIS_USERNAME'),
+            'password' => env('REDIS_PASSWORD'),
             'port' => env('REDIS_PORT', '6379'),
             'database' => env('REDIS_CACHE_DB', '1'),
-            // TLS Config for predis
+            // TLS Config for phpredis
             'ssl' => [
                 'peer_name' => env('REDIS_TLS_PEER_NAME', ''),
                 'verify_peer' => env('REDIS_TLS_VERIFY_PEER', true),
