@@ -9,7 +9,7 @@
         "jumbojett/openid-connect-php": "1.0.2",
         "laravel/framework": "^v11.16",
         "laravel/tinker": "^2.8",
-        "minvws/openid-connect-php-laravel": "^0.3.1",
+        "minvws/openid-connect-php-laravel": "^0.4.0",
         "web-token/jwt-experimental": "^3.4",
         "web-token/jwt-library": "^3.4"
     },
