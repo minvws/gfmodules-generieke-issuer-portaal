@@ -5,11 +5,10 @@
 
 version: 2
 registries:
-  github-minvws:
-    type: git
-    url: https://github.com
-    username: x-access-token
-    password: "${{ secrets.REPO_READ_ONLY_TOKEN }}"
+  npm-github:
+    type: npm-registry
+    url: https://npm.pkg.github.com
+    token: ${{ secrets.REPO_READ_ONLY_TOKEN }}
 
 updates:
   # Maintain dependencies for GitHub Actions
@@ -29,7 +28,7 @@ updates:
     schedule:
       interval: "weekly"
     registries:
-      - github-minvws
+      - npm-github
     open-pull-requests-limit: 5
     groups:
       version-updates:
@@ -42,8 +41,6 @@ updates:
     directory: "/"
     schedule:
       interval: "weekly"
-    registries:
-      - github-minvws
     open-pull-requests-limit: 5
     groups:
       version-updates:
