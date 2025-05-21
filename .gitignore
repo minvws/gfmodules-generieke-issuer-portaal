@@ -31,3 +31,5 @@ yarn.lock
 *.key
 *.crt
 *.pub
+/storage/pail
+/.nova

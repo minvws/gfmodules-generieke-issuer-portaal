@@ -5,31 +5,30 @@
     "license": "EUPL-1.2",
     "require": {
         "php": "^8.3.0",
-        "guzzlehttp/guzzle": "^7.8",
         "jumbojett/openid-connect-php": "1.0.2",
-        "laravel/framework": "^v11.16",
-        "laravel/tinker": "^2.8",
-        "minvws/openid-connect-php-laravel": "^0.3.1",
+        "laravel/framework": "^12.8",
+        "laravel/tinker": "^2.10.1",
+        "minvws/openid-connect-php-laravel": "^0.4.0",
         "web-token/jwt-experimental": "^3.4",
         "web-token/jwt-library": "^3.4"
     },
     "require-dev": {
-        "barryvdh/laravel-debugbar": "^3.14",
-        "barryvdh/laravel-ide-helper": "^3.0",
+        "barryvdh/laravel-debugbar": "^3.15",
+        "barryvdh/laravel-ide-helper": "^3.5",
         "fakerphp/faker": "^1.23",
-        "jorijn/laravel-security-checker": "^2.4",
-        "larastan/larastan": "^3.0",
+        "jorijn/laravel-security-checker": "^2.6",
+        "larastan/larastan": "^3.1",
         "laravel/pint": "^1.13",
-        "laravel/sail": "^1.25",
+        "laravel/sail": "^1.41",
         "mockery/mockery": "^1.6",
-        "nunomaduro/collision": "^8.1",
+        "nunomaduro/collision": "^8.6",
         "phpstan/phpstan": "^2.0",
         "phpunit/phpunit": "^12.1",
         "psalm/plugin-laravel": "^3.0",
         "slevomat/coding-standard": "^8.14",
-        "spatie/laravel-ignition": "^2.0",
         "squizlabs/php_codesniffer": "^3.7",
-        "vimeo/psalm": "^6.0"
+        "vimeo/psalm": "^6.0",
+        "laravel/pail": "^1.2.2"
     },
     "autoload": {
         "psr-4": {
@@ -56,12 +55,15 @@
         ],
         "post-create-project-cmd": [
             "@php artisan key:generate --ansi"
+        ],
+        "dev": [
+            "Composer\\Config::disableProcessTimeout",
+            "npx concurrently -c \"#93c5fd,#c4b5fd,#fb7185,#fdba74\" \"php artisan serve\" \"php artisan queue:listen --tries=1\" \"php artisan pail --timeout=0\" \"npm run dev\" --names=server,queue,logs,vite"
         ]
     },
     "extra": {
         "laravel": {
-            "dont-discover": [
-            ]
+            "dont-discover": []
         }
     },
     "config": {

@@ -9,11 +9,11 @@ use Tests\TestCase;
 class DummyTest extends TestCase
 {
     /**
-     * Store a vaccination.
+     * Dummy
      *
      * @return void
      */
-    public function testVaccinationEncryptionYubi()
+    public function testDummy(): void
     {
         $this->assertEquals('DUMMY', 'DUMMY');
     }

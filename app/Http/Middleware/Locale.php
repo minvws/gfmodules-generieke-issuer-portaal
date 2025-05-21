@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Http\Middleware;
 
+use Symfony\Component\HttpFoundation\Response;
 use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
@@ -19,11 +20,9 @@ class Locale
     /**
      * Handle an incoming request.
      *
-     * @param Request $request
-     * @param Closure $next
-     * @return mixed
+     * @param Closure(Request): (Response) $next
      */
-    public function handle(Request $request, Closure $next)
+    public function handle(Request $request, Closure $next): Response
     {
         $raw_locale = $request->session()->get('locale');
         if (in_array($raw_locale, Config::get('app.locales'), true)) {
