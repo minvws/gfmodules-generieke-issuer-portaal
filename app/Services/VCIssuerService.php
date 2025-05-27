@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Services;
 
 use App\Attributes\JWK as JWKAttribute;
+use App\Dto\CredentialOfferUrl;
 use Illuminate\Container\Attributes\Config;
 use Illuminate\Support\Facades\Http;
 use Jose\Component\Core\JWK;
@@ -27,10 +28,10 @@ class VCIssuerService
 
     /**
      * @param array<string, mixed> $subject The data to be included in the credential
-     * @return string The issuance URL
+     * @return CredentialOfferUrl Object with the issuance URL
      * @throws RuntimeException
      */
-    public function issueCredential(array $subject = []): string
+    public function issueCredential(array $subject = []): CredentialOfferUrl
     {
         $response = Http::post($this->getIssuerUrl(), $this->buildIssueBody($subject));
 
@@ -38,7 +39,7 @@ class VCIssuerService
             throw new RuntimeException('Failed to issue credential');
         }
 
-        return $response->body();
+        return new CredentialOfferUrl($response->body());
     }
 
     protected function getIssuerUrl(): string
@@ -88,11 +89,8 @@ class VCIssuerService
                     "VerifiableCredential",
                     "MijnGeneriekeCredential"
                 ],
-                "id" => "88652d6c-e93a-4ac5-afeb-0120ddb0f2b5", // Wordt door mapping overschreven
                 "credentialSubject" => $subject,
                 "issuer" => [
-                    // id - Wordt door mapping overschreven
-//                    "id" => "did:key:z6MkrHKzgsahxBLyNAbLQyB1pcWNYC9GmywiWPgkrvntAZcj",
                     "name" => "Mijn Generieke Credentials Issuer Test"
                 ],
 //                "issuanceDate" => "2021-08-31T00:00:00Z", // Wordt door mapping overschreven
