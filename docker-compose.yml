@@ -42,7 +42,6 @@ services:
             WALLET_BACKEND_PORT: '${WALTID_WALLET_BACKEND_PORT}'
         volumes:
             - ./docker/wallet-api/config:/waltid-wallet-api/config
-            - ./docker/wallet-api/walt.yaml:/waltid-wallet-api/walt.yaml
             - ./docker/wallet-api/data:/waltid-wallet-api/data
         depends_on:
             wallet-api-db:
