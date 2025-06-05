@@ -17,6 +17,7 @@ return [
 
     'defaults' => [
         'guard' => env('AUTH_GUARD', 'web'),
+        'provider' => env('AUTH_PROVIDER', 'users'),
     ],
 
     /*
