@@ -44,7 +44,7 @@ class MakeCredential extends Command
         }
 
         $this->info('Credential created, here is the offer uri:');
-        $this->info($issuanceUrl);
+        $this->info($issuanceUrl->getUrl());
     }
 
     /**

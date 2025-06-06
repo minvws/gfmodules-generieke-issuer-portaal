@@ -39,7 +39,8 @@ class FlowController extends Controller
         $issuanceUrl = $this->issuerService->issueCredential($subject);
 
         return view('flow.credential')
-            ->with('issuanceUrl', $issuanceUrl);
+            ->with('issuanceUrl', $issuanceUrl->getUrl())
+            ->with('credentialOfferUri', $issuanceUrl->getCredentialOfferUri());
     }
 
     public function editCredentialData(): View
