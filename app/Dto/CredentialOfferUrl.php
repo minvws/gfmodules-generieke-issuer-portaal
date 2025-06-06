@@ -30,7 +30,7 @@ class CredentialOfferUrl
         }
 
         parse_str($query, $queryParams);
-        $uri = $queryParams['credential_offer_uri'];
+        $uri = $queryParams['credential_offer_uri'] ?? null;
 
         if (!is_string($uri)) {
             throw new InvalidArgumentException('Invalid URL: No credential offer URI found.');
