@@ -3,6 +3,8 @@
 PoC application to issue Verifiable Credentials.
 NOTE: This is a Proof of Concept application and not intended for production use.
 
+This project is part of the 'Generieke Functies' project of the Ministry of Health, Welfare and Sport of the Dutch government.
+
 
 > [!IMPORTANT]
 > ## Disclaimer
@@ -90,3 +92,15 @@ The opensource walt.id stack that is used has no support for revocation of crede
 It would be possible to set credential statuses by using an external status services, like:
 - https://github.com/digitalcredentials/status-service-db
 - https://github.com/eu-digital-identity-wallet/eudi-srv-statuslist-py
+
+## Contribution
+
+As stated in the [Disclaimer](#disclaimer) this project and all associated code serve solely as documentation and
+demonstration purposes to illustrate potential system communication patterns and architectures.
+
+For that reason we will only accept contributions that fit this goal. We do appreciate any effort from the
+community, but because our time is limited it is possible that your PR or issue is closed without a full justification.
+
+If you plan to make non-trivial changes, we recommend to open an issue beforehand where we can discuss your planned changes. This increases the chance that we might be able to use your contribution (or it avoids doing work if there are reasons why we wouldn't be able to use it).
+
+Note that all commits should be signed using a gpg key.
