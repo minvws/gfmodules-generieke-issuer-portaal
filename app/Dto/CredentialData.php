@@ -20,7 +20,6 @@ class CredentialData
 
     /**
      * @return array<string, mixed>
-     * @throws JsonException
      */
     public function getSubjectAsArray(): array
     {
@@ -28,6 +27,10 @@ class CredentialData
             return [];
         }
 
-        return json_decode($this->subject, true, 512, JSON_THROW_ON_ERROR);
+        try {
+            return json_decode($this->subject, true, 512, JSON_THROW_ON_ERROR);
+        } catch (JsonException) {
+            return [];
+        }
     }
 }
