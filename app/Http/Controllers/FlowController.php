@@ -6,22 +6,28 @@ namespace App\Http\Controllers;
 
 use App\Dto\CredentialData;
 use App\Http\Requests\FlowCredentialDataRequest;
+use App\Services\EnrichService;
 use App\Services\FlowStateService;
 use App\Services\VCIssuerService;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
+use JsonException;
 
 class FlowController extends Controller
 {
     public function __construct(
         protected FlowStateService $stateService,
         protected VCIssuerService $issuerService,
+        protected EnrichService $enrichService,
     ) {
     }
 
     public function index(): View
     {
-        return $this->returnFlowView();
+        $credentialSubject = $this->getDefaultCredentialSubject();
+        $credentialSubject = $this->enrichService->enrich($credentialSubject);
+
+        return $this->returnFlowView($credentialSubject);
     }
 
     public function retrieveCredential(): RedirectResponse|View
@@ -45,7 +51,10 @@ class FlowController extends Controller
 
     public function editCredentialData(): View
     {
-        return $this->returnFlowView(editCredentialData: true);
+        $flow = $this->stateService->getFlowStateFromSession();
+        $credentialSubject = $flow->getCredentialData()?->getSubjectAsArray() ?? $this->getDefaultCredentialSubject();
+
+        return $this->returnFlowView($credentialSubject, editCredentialData: true);
     }
 
     public function storeCredentialData(FlowCredentialDataRequest $request): RedirectResponse
@@ -58,23 +67,38 @@ class FlowController extends Controller
         return redirect()->route('flow');
     }
 
-    protected function returnFlowView(bool $editCredentialData = false, bool $editAuthorization = false): View
-    {
+    /**
+     * @param mixed[] $credentialSubject
+     * @param bool $editCredentialData
+     * @param bool $editAuthorization
+     * @return View
+     */
+    protected function returnFlowView(
+        array $credentialSubject,
+        bool $editCredentialData = false,
+        bool $editAuthorization = false
+    ): View {
         $state = $this->stateService->getFlowStateFromSession();
+        try {
+            $cs = json_encode($credentialSubject, JSON_THROW_ON_ERROR | JSON_PRETTY_PRINT);
+        } catch (JsonException) {
+            $cs = '';
+        }
 
         return view('flow.index')
             ->with('state', $state)
             ->with('editCredential', $editCredentialData)
             ->with('editAuthorization', $editAuthorization)
-            ->with('defaultCredentialSubject', $this->getDefaultCredentialSubject());
+            ->with('defaultCredentialSubject', $cs);
     }
 
-    protected function getDefaultCredentialSubject(): string
+    /**
+     * @return string[]
+     */
+    protected function getDefaultCredentialSubject(): array
     {
-        $data = [
+        return [
             "organization_code" => '12341234'
         ];
-
-        return json_encode($data, JSON_THROW_ON_ERROR | JSON_PRETTY_PRINT);
     }
 }

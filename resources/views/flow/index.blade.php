@@ -49,18 +49,7 @@
                             </form>
                         @else
                             <p>U gaat een credential uitgeven met de volgende attributen.</p>
-                            <table>
-                                <tr>
-                                    <th>Attribuut</th>
-                                    <th>Waarde</th>
-                                </tr>
-                                @foreach($state->getCredentialData()->getSubjectAsArray() as $key => $value )
-                                <tr>
-                                    <td>{{ $key }}</td>
-                                    <td>{{ is_string($value) || is_numeric($value) ? $value : json_encode($value)  }}</td>
-                                </tr>
-                                @endforeach
-                            </table>
+                            <x-recursive-table :data="$state->getCredentialData()->getSubjectAsArray()" />
                             <a href="{{ route('flow-credential') }}" class="button ghost">Attributen wijzigen</a>
                         @endif
                     </div>

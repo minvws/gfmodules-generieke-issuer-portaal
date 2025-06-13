@@ -10,6 +10,8 @@ use Illuminate\Contracts\Session\Session;
 
 class FlowStateService
 {
+    private const FLOW_CREDENTIAL_DATA_KEY = 'flow_credential_data';
+
     public function __construct(
         protected Session $session,
     ) {
@@ -18,22 +20,17 @@ class FlowStateService
     public function getFlowStateFromSession(): FlowState
     {
         return new FlowState(
-            credentialData: $this->getCredentialDataFromSession(),
+            credentialData: $this->session->get(self::FLOW_CREDENTIAL_DATA_KEY),
         );
     }
 
     public function setCredentialDataInSession(CredentialData $state): void
     {
-        $this->session->put('flow_credential_data', $state);
+        $this->session->put(self::FLOW_CREDENTIAL_DATA_KEY, $state);
     }
 
     public function clearFlowState(): void
     {
-        $this->session->forget('flow_credential_data');
-    }
-
-    protected function getCredentialDataFromSession(): ?CredentialData
-    {
-        return $this->session->get('flow_credential_data');
+        $this->session->forget(self::FLOW_CREDENTIAL_DATA_KEY);
     }
 }
