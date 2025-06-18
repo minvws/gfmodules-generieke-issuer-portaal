@@ -22,7 +22,7 @@ class FlowController extends Controller
     ) {
     }
 
-    public function index(): View
+    public function index(): RedirectResponse|View
     {
         $credentialSubject = $this->getDefaultCredentialSubject();
         $credentialSubject = $this->enrichService->enrich($credentialSubject);
@@ -49,9 +49,13 @@ class FlowController extends Controller
             ->with('credentialOfferUri', $issuanceUrl->getCredentialOfferUri());
     }
 
-    public function editCredentialData(): View
+    public function editCredentialData(): RedirectResponse|View
     {
         $flow = $this->stateService->getFlowStateFromSession();
+        if ($flow->getUser() === null) {
+            return redirect()->route('index')
+                ->with('error', __('You must be logged in to retrieve a credential.'));
+        }
         $credentialSubject = $flow->getCredentialData()?->getSubjectAsArray() ?? $this->getDefaultCredentialSubject();
 
         return $this->returnFlowView($credentialSubject, editCredentialData: true);

@@ -7,6 +7,7 @@ namespace App\Services;
 use App\Dto\CredentialData;
 use App\Dto\FlowState;
 use Illuminate\Contracts\Session\Session;
+use App\Services\AuthGuard;
 
 class FlowStateService
 {
@@ -14,13 +15,17 @@ class FlowStateService
 
     public function __construct(
         protected Session $session,
+        protected AuthGuard $authGuard
     ) {
     }
 
     public function getFlowStateFromSession(): FlowState
     {
+        $user = $this->authGuard->user();
+
         return new FlowState(
             credentialData: $this->session->get(self::FLOW_CREDENTIAL_DATA_KEY),
+            user: $user
         );
     }
 

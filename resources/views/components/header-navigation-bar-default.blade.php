@@ -11,6 +11,16 @@
                 <a href="{{ route('flow') }}" @if(\Illuminate\Support\Facades\Route::currentRouteName() === 'flow') aria-current="page" @endif>@lang('Flow')</a>
             </li>
         </ul>
+        @auth
+        <ul>
+            <li>
+                <form action="{{ route('logout') }}" method="POST" class="inline">
+                    @csrf
+                    <button type="submit">@lang('Logout')</button>
+                </form>
+            </li>
+        </ul>
+        @endauth
     </div>
 </nav>
 

@@ -16,14 +16,35 @@
 
             <ul class="accordion">
                 <li>
-                    <button aria-expanded="true" id="flow-credential">1.
+                    <button aria-expanded="true"
+                            id="flow-identification-authentication">1. Identificatie en Authenticatie
+                    </button>
+                    <div aria-labelledby="flow-identification-authentication">
+                        @if(!$state->getUser())
+                            @error('login')
+                            <p class="error"><span>@lang('Error'):</span> {{ $message }}</p>
+                            @enderror
+                            <ul class="external-login">
+                                <li>
+                                    <a href="{{ route('vc.login') }}">
+                                        @lang('Login with') VC
+                                    </a>
+                                </li>
+                            </ul>
+                        @else
+                            <p>Je bent ingelogd als organisatie: {{ $state->getUser()->getName() }}</p>
+                        @endif
+                    </div>
+                </li>
+                <li>
+                    <button aria-expanded="{{ $state->getUser() ? "true" : "false" }}" id="flow-credential">1.
                         Credential
                     </button>
                     <div aria-labelledby="flow-credential">
                         @if(!$state->getCredentialData() || $editCredential)
                             <form action="{{ route('flow-credential.store') }}" method="POST">
                                 @csrf
-                                <fieldset>
+                                <fieldset {{ !$state->getUser() ? "disabled" : "" }}>
                                     <p>Geef hier je eigen credential uit.</p>
                                     <div>
                                         <label for="flow-credential-subject">Attributen</label>

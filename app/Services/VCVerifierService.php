@@ -5,8 +5,11 @@ declare(strict_types=1);
 namespace App\Services;
 
 use App\Dto\PresentationSessionInitiated;
+use App\Dto\PresentationSessionResult;
 use Illuminate\Container\Attributes\Config;
+use Illuminate\Http\Client\ConnectionException;
 use Illuminate\Support\Facades\Http;
+use JsonException;
 use RuntimeException;
 
 class VCVerifierService
@@ -21,13 +24,29 @@ class VCVerifierService
      * Initialize an OIDC for Verifiable Presentation session.
      *
      * @param string $credentialType The type of credential to request
+     * @param string|null $successRedirectUrl The URL to redirect to on success
+     * @param string|null $errorRedirectUrl The URL to redirect to on error
      * @return PresentationSessionInitiated Containing the information about the presentation session
+     * @throws ConnectionException
      */
-    public function initializePresentationSession(string $credentialType): PresentationSessionInitiated
-    {
+    public function initializePresentationSession(
+        string $credentialType,
+        ?string $successRedirectUrl = null,
+        ?string $errorRedirectUrl = null,
+    ): PresentationSessionInitiated {
+        $additionalHeaders = [];
+
+        if (!empty($successRedirectUrl)) {
+            $additionalHeaders['successRedirectUri'] = $successRedirectUrl;
+        }
+        if (!empty($errorRedirectUrl)) {
+            $additionalHeaders['errorRedirectUri'] = $errorRedirectUrl;
+        }
+
         $response = Http::withHeaders([
-          'authorizeBaseUrl' => 'openid4vp://authorize',
-          'responseMode' => 'direct_post',
+            'authorizeBaseUrl' => 'openid4vp://authorize',
+            'responseMode' => 'direct_post',
+            ...$additionalHeaders,
         ])->post($this->getVerifyEndpointUrl(), [
             "request_credentials" => [
                 [
@@ -49,9 +68,10 @@ class VCVerifierService
      * Retrieve the verifiable presentation session.
      *
      * @param string $sessionId The session ID of the verifiable presentation session
-     * @return array<mixed> The session information
+     * @return PresentationSessionResult The session information
+     * @throws ConnectionException|JsonException
      */
-    public function getPresentationSession(string $sessionId): array
+    public function getPresentationSession(string $sessionId): PresentationSessionResult
     {
         $response = Http::get($this->getSessionEndpointUrl($sessionId));
 
@@ -64,7 +84,7 @@ class VCVerifierService
             throw new RuntimeException('Invalid response format for the verifiable presentation session');
         }
 
-        return $data;
+        return PresentationSessionResult::parse($data);
     }
 
     protected function getSessionIdOfVpAuthorizeUrl(string $authorizeUrl): string

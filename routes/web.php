@@ -5,6 +5,8 @@ declare(strict_types=1);
 use App\Http\Controllers\FlowController;
 use App\Http\Controllers\IndexController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Auth\LogoutController;
+use App\Http\Controllers\Auth\VcLoginController;
 
 /*
 |--------------------------------------------------------------------------
@@ -23,3 +25,15 @@ Route::post('/flow', [FlowController::class, 'retrieveCredential'])
     ->name('flow.retrieve-credential');
 Route::get('/flow/credential', [FlowController::class, 'editCredentialData'])->name('flow-credential');
 Route::post('/flow/credential', [FlowController::class, 'storeCredentialData'])->name('flow-credential.store');
+
+Route::middleware(['guest'])->group(function () {
+    Route::get('vc/login', [VcLoginController::class, 'login'])->name('vc.login');
+    Route::get('vc/login/{sessionId}', [VcLoginController::class, 'session'])
+        ->name('vc.login-session')
+        ->middleware(['throttle:60,1']);
+});
+
+Route::middleware(['auth'])
+    ->group(function () {
+        Route::post('logout', LogoutController::class)->name('logout');
+    });
