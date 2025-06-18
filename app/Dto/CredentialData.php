@@ -10,8 +10,7 @@ class CredentialData
 {
     public function __construct(
         protected ?string $subject = null,
-    ) {
-    }
+    ) {}
 
     public function getSubject(): ?string
     {

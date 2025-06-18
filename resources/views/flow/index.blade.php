@@ -24,10 +24,25 @@
                             @error('login')
                             <p class="error"><span>@lang('Error'):</span> {{ $message }}</p>
                             @enderror
+
+                            @php
+                                $loginMethod = config('login_method.method');
+                                if ($loginMethod === 'vc') {
+                                    $loginRoute = route('vc.login');
+                                    $loginText = __('Login with') . ' VC';
+                                } elseif ($loginMethod === 'noop') {
+                                    $loginRoute = route('noop.login');
+                                    $loginText = __('Login without authentication');
+                                } else {
+                                    $loginRoute = '#';
+                                    $loginText = __('Login');
+                                }
+                            @endphp
+
                             <ul class="external-login">
                                 <li>
-                                    <a href="{{ route('vc.login') }}">
-                                        @lang('Login with') VC
+                                    <a href="{{ $loginRoute }}">
+                                        {{ $loginText }}
                                     </a>
                                 </li>
                             </ul>
@@ -41,37 +56,9 @@
                         Credential
                     </button>
                     <div aria-labelledby="flow-credential">
-                        @if(!$state->getCredentialData() || $editCredential)
-                            <form action="{{ route('flow-credential.store') }}" method="POST">
-                                @csrf
-                                <fieldset {{ !$state->getUser() ? "disabled" : "" }}>
-                                    <p>Geef hier je eigen credential uit.</p>
-                                    <div>
-                                        <label for="flow-credential-subject">Attributen</label>
-                                        <span
-                                            class="nota-bene">Attributen van het credential</span>
-                                        <div>
-                                            @error('subject')
-                                            <p class="error" id="flow-credential-subject-error-message">
-                                                <span>Foutmelding:</span> {{ $message }}
-                                            </p>
-                                            @enderror
-                                            <textarea
-                                                id="flow-credential-subject"
-                                                name="subject"
-                                                required
-                                                aria-describedby="flow-credential-subject-error-message"
-                                                rows="10"
-                                                >{{ old('subject', $state->getCredentialData()?->getSubject() ?? $defaultCredentialSubject) }}</textarea>
-                                        </div>
-                                    </div>
-                                    <button type="submit">Opslaan</button>
-                                </fieldset>
-                            </form>
-                        @else
+                        @if($state->getCredentialData())
                             <p>U gaat een credential uitgeven met de volgende attributen.</p>
                             <x-recursive-table :data="$state->getCredentialData()->getSubjectAsArray()" />
-                            <a href="{{ route('flow-credential') }}" class="button ghost">Attributen wijzigen</a>
                         @endif
                     </div>
                 </li>
