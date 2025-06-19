@@ -8,29 +8,29 @@ use Exception;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Contracts\Auth\Authenticatable;
 use RuntimeException;
+use JsonException;
 
 class User implements Authenticatable
 {
     /**
-     * @param string $id
-     * @param string $organizationCode
+     * @param string $userinfo
      */
     public function __construct(
-        public string $id,
-        public string $organizationCode,
+        public string $userinfo,
+        public ?string $name = null,
+        public ?string $organization_code = null,
     ) {
     }
 
     /**
      * @param object{
-     *     id: string,
-     *     organization_code: string
+     *     userinfo: string
      * } $oidcResponse
      * @throws Exception
      */
     public static function deserializeFromObject(object $oidcResponse): ?User
     {
-        $requiredKeys = ["id", "organization_code"];
+        $requiredKeys = ["userinfo"];
         $missingKeys = [];
         foreach ($requiredKeys as $key) {
             if (!property_exists($oidcResponse, $key)) {
@@ -41,11 +41,34 @@ class User implements Authenticatable
             Log::error("User missing required fields: " . implode(", ", $missingKeys));
             throw new Exception("Missing required fields: " . implode(", ", $missingKeys));
         }
+        $jsonDecoded = json_decode($oidcResponse->userinfo, true);
 
         return new User(
-            $oidcResponse->id,
-            $oidcResponse->organization_code
+            $oidcResponse->userinfo,
+            $jsonDecoded['name'] ?? null,
+            $jsonDecoded['organization_code'] ?? null
         );
+    }
+
+    /**
+     * @return array<string, mixed>
+     */
+    public function getAsArray(): array
+    {
+        if ($this->userinfo === null) {
+            return [];
+        }
+
+        try {
+            return json_decode($this->userinfo, true, 512, JSON_THROW_ON_ERROR);
+        } catch (JsonException) {
+            return [];
+        }
+    }
+
+    public function getUserInfo(): string
+    {
+        return $this->userinfo;
     }
 
     /**
@@ -55,7 +78,7 @@ class User implements Authenticatable
      */
     public function getName(): string
     {
-        return $this->organizationCode;
+        return $this->name ?? $this->organization_code ?? 'Unknown User';
     }
 
     /**
@@ -65,7 +88,7 @@ class User implements Authenticatable
      */
     public function getAuthIdentifierName(): string
     {
-        return $this->organizationCode;
+        return $this->userinfo;
     }
 
 
@@ -76,7 +99,7 @@ class User implements Authenticatable
      */
     public function getAuthIdentifier(): string
     {
-        return $this->organizationCode;
+        return $this->userinfo;
     }
 
     /**

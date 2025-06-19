@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Services;
 
+use Exception;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
 use Illuminate\Container\Attributes\Config;
@@ -55,20 +56,26 @@ class EnrichService
             $response = $client->post('/enrich', [
                 'json' => $data,
             ]);
-
-            if ($response->getStatusCode() !== 200) {
-                return $data;
-            }
-
-            try {
-                $enrichedData = json_decode($response->getBody()->getContents(), true, 512, JSON_THROW_ON_ERROR);
-            } catch (JsonException $e) {
-                return $data;
-            }
         } catch (GuzzleException $e) {
-            return $data;
+            \Log::error('EnrichService GuzzleException: ' . $e->getMessage(), ['exception' => $e]);
+            throw new Exception("Failed to connect to Enrich client: " . $e->getMessage());
         }
 
-        return $enrichedData;
+        if ($response->getStatusCode() !== 200) {
+            throw new Exception("Failed to enrich data: HTTP {$response->getStatusCode()} - {$response->getReasonPhrase()}");
+        }
+
+        try{
+            $enrichedData = json_decode($response->getBody()->getContents(), true, 512, JSON_THROW_ON_ERROR);
+            if (!is_array($enrichedData) or !isset($enrichedData['kvk_enriched'])) {
+                \Log::error("Invalid response from source connector: " . json_encode($enrichedData));
+                throw new Exception('Invalid response from source connector: ' . json_encode($enrichedData));
+            }
+        } catch (JsonException $e) {
+            \Log::error('EnrichService JsonException: ' . $e->getMessage(), ['exception' => $e]);
+            throw new Exception("Failed to decode JSON response: " . $e->getMessage());
+        }
+
+        return $enrichedData['kvk_enriched'];
     }
 }

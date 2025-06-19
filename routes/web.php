@@ -7,6 +7,7 @@ use App\Http\Controllers\IndexController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\LogoutController;
 use App\Http\Controllers\Auth\VcLoginController;
+use App\Http\Controllers\Auth\NoopLoginController;
 
 /*
 |--------------------------------------------------------------------------
@@ -23,15 +24,20 @@ Route::get('/', IndexController::class)->name('index');
 Route::get('/flow', [FlowController::class, 'index'])->name('flow');
 Route::post('/flow', [FlowController::class, 'retrieveCredential'])
     ->name('flow.retrieve-credential');
-Route::get('/flow/credential', [FlowController::class, 'editCredentialData'])->name('flow-credential');
-Route::post('/flow/credential', [FlowController::class, 'storeCredentialData'])->name('flow-credential.store');
+Route::post('/flow/credential', [FlowController::class, 'enrichCredentialData'])->name('flow-credential.enrich');
 
-Route::middleware(['guest'])->group(function () {
-    Route::get('vc/login', [VcLoginController::class, 'login'])->name('vc.login');
-    Route::get('vc/login/{sessionId}', [VcLoginController::class, 'session'])
-        ->name('vc.login-session')
-        ->middleware(['throttle:60,1']);
-});
+if (config('login_method.method') === 'oidc-vc') {
+    Route::middleware(['guest'])->group(function () {
+        Route::get('vc/login', [VcLoginController::class, 'login'])->name('vc.login');
+        Route::get('vc/login/{sessionId}', [VcLoginController::class, 'session'])
+            ->name('vc.login-session')
+            ->middleware(['throttle:60,1']);
+    });
+} else {
+    Route::middleware(['guest'])->group(function () {
+        Route::get('noop/login', [NoopLoginController::class, 'login'])->name('noop.login');
+    });
+}
 
 Route::middleware(['auth'])
     ->group(function () {
