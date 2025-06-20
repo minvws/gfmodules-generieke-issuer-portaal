@@ -42,7 +42,11 @@ class AuthGuard implements Guard
 
     public function id(): string | null
     {
-        return $this->user()?->id;
+        $user = $this->user();
+        if ($user === null) {
+            return null;
+        }
+        return base64_encode((string) $user->userinfo);
     }
 
     /**
@@ -80,7 +84,7 @@ class AuthGuard implements Guard
 
         $this->clearUserDataFromStorage();
 
-        $this->events->dispatch(new Logout('oidc', $user));
+        $this->events->dispatch(new Logout('session', $user));
     }
 
     protected function clearUserDataFromStorage(): void

@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace App\Models;
 
-use Exception;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Contracts\Auth\Authenticatable;
 use RuntimeException;
 use JsonException;
@@ -17,37 +15,7 @@ class User implements Authenticatable
      */
     public function __construct(
         public string $userinfo,
-        public ?string $name = null,
-        public ?string $organization_code = null,
     ) {
-    }
-
-    /**
-     * @param object{
-     *     userinfo: string
-     * } $oidcResponse
-     * @throws Exception
-     */
-    public static function deserializeFromObject(object $oidcResponse): ?User
-    {
-        $requiredKeys = ["userinfo"];
-        $missingKeys = [];
-        foreach ($requiredKeys as $key) {
-            if (!property_exists($oidcResponse, $key)) {
-                $missingKeys[] = $key;
-            }
-        }
-        if (count($missingKeys) > 0) {
-            Log::error("User missing required fields: " . implode(", ", $missingKeys));
-            throw new Exception("Missing required fields: " . implode(", ", $missingKeys));
-        }
-        $jsonDecoded = json_decode($oidcResponse->userinfo, true);
-
-        return new User(
-            $oidcResponse->userinfo,
-            $jsonDecoded['name'] ?? null,
-            $jsonDecoded['organization_code'] ?? null
-        );
     }
 
     /**
@@ -55,7 +23,7 @@ class User implements Authenticatable
      */
     public function getAsArray(): array
     {
-        if ($this->userinfo === null) {
+        if (empty($this->userinfo)) {
             return [];
         }
 
@@ -69,16 +37,6 @@ class User implements Authenticatable
     public function getUserInfo(): string
     {
         return $this->userinfo;
-    }
-
-    /**
-     * Get the name of the unique identifier for the user.
-     *
-     * @return string
-     */
-    public function getName(): string
-    {
-        return $this->name ?? $this->organization_code ?? 'Unknown User';
     }
 
     /**

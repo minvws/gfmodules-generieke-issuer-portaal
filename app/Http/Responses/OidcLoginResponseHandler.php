@@ -15,20 +15,20 @@ class OidcLoginResponseHandler implements LoginResponseHandlerInterface
 {
     /**
      * @param object{
-    *     id: string,
-    *     organization_code: string,
      *  } $userInfo
      */
     public function handleLoginResponse(object $userInfo): Response
     {
-        $user = User::deserializeFromObject($userInfo);
-        if ($user === null) {
+        try {
+            $jsonDecoded = json_encode($userInfo, JSON_THROW_ON_ERROR, 512);
+            $user = new User(
+                $jsonDecoded
+            );
+        } catch (Exception $e) {
             return redirect()
                 ->route('index')
-                ->with('error', __('Something went wrong with logging in, please try again.'));
-        }
-        if (!$user->getName()) {
-            throw new Exception('User does not have a valid name.');
+                ->with('error', __('Something went wrong with logging in, please try again.'))
+                ->with('error_description', $e->getMessage());
         }
 
         Auth::setUser($user);

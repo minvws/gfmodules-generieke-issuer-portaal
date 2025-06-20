@@ -19,6 +19,11 @@ class FlowState
         return $this->user;
     }
 
+    public function hasCredentialData(): bool
+    {
+        return $this->credentialData !== null;
+    }
+
     public function getCredentialData(): ?CredentialData
     {
         return $this->credentialData;

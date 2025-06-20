@@ -33,7 +33,7 @@ class AppServiceProvider extends ServiceProvider
 
     public function bootAuth(): void
     {
-        Auth::extend('oidc', function (Application $app, string $name, array $config) {
+        Auth::extend('session', function (Application $app, string $name, array $config) {
             return new AuthGuard($app->make('session')->driver(), $app->make('events'));
         });
     }

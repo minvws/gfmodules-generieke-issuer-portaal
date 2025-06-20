@@ -62,12 +62,13 @@ class EnrichService
         }
 
         if ($response->getStatusCode() !== 200) {
-            throw new Exception("Failed to enrich data: HTTP {$response->getStatusCode()} - {$response->getReasonPhrase()}");
+            throw new Exception("Failed to enrich data: HTTP 
+                {$response->getStatusCode()} - {$response->getReasonPhrase()}");
         }
 
-        try{
+        try {
             $enrichedData = json_decode($response->getBody()->getContents(), true, 512, JSON_THROW_ON_ERROR);
-            if (!is_array($enrichedData) or !isset($enrichedData['kvk_enriched'])) {
+            if (!is_array($enrichedData)) {
                 \Log::error("Invalid response from source connector: " . json_encode($enrichedData));
                 throw new Exception('Invalid response from source connector: ' . json_encode($enrichedData));
             }
@@ -76,6 +77,6 @@ class EnrichService
             throw new Exception("Failed to decode JSON response: " . $e->getMessage());
         }
 
-        return $enrichedData['kvk_enriched'];
+        return $enrichedData;
     }
 }

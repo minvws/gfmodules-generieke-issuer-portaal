@@ -39,7 +39,7 @@ return [
 
     'guards' => [
         'web' => [
-            'driver' => 'oidc',
+            'driver' => 'session',
         ],
     ],
 

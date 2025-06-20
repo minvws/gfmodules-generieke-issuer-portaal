@@ -10,7 +10,6 @@ use Symfony\Component\HttpFoundation\Response;
 
 class MockLoginController extends Controller
 {
-
     public function __construct(
         protected readonly LoginResponseHandlerInterface $loginResponseHandler
     ) {
@@ -23,10 +22,8 @@ class MockLoginController extends Controller
     {
         return $this->loginResponseHandler->handleLoginResponse(
             (object)[
-                "userinfo" => json_encode([
                     "organization_code" => "12341234",
-                ]),
-            ]
+                ]
         );
     }
 }

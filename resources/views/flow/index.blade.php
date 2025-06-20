@@ -54,7 +54,8 @@
                                 @endforeach
                             </ul>
                         @else
-                            <p>Je bent ingelogd als organisatie: {{ $state->getUser()->getName() }}</p>
+                            <p>Je bent ingelogd als organisatie: </p>
+                            @dump($state->getUser()->getUserInfo())
                         @endif
                     </div>
                 </li>
@@ -62,7 +63,7 @@
                     <button aria-expanded="{{ $state->getUser() ? "true" : "false" }}" id="flow-credential">2. Brondata ophalen
                     </button>
                     <div aria-labelledby="flow-credential">
-                        @if(!$credentialEnriched)
+                        @if(!$state->hasCredentialData())
                             <form action="{{ route('flow-credential.enrich') }}" method="POST">
                                 @csrf
                                 <fieldset {{ !$state->getUser() ? "disabled" : "" }}>
@@ -80,7 +81,7 @@
             <form class="inline" action="{{ route('flow.retrieve-credential') }}" method="POST">
                 @csrf
                 <button
-                    type="submit" {{ $state->getCredentialData() ? "" : "disabled" }}>
+                    type="submit" {{ $state->hasCredentialData() ? "" : "disabled" }}>
                     Credential uitgeven
                 </button>
             </form>

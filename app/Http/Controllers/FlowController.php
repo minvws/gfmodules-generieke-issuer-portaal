@@ -5,13 +5,11 @@ declare(strict_types=1);
 namespace App\Http\Controllers;
 
 use App\Dto\CredentialData;
-use App\Http\Requests\FlowCredentialDataRequest;
 use App\Services\EnrichService;
 use App\Services\FlowStateService;
 use App\Services\VCIssuerService;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
-use JsonException;
 use Exception;
 
 class FlowController extends Controller
@@ -54,8 +52,7 @@ class FlowController extends Controller
             return redirect()->route('index')
                 ->with('error', __('You must be logged in to retrieve a credential.'));
         }
-        if ($state->getCredentialData())
-        {
+        if ($state->hasCredentialData()) {
             return redirect()
                 ->route('flow')
                 ->with('error', __('Credential already enriched'));
@@ -82,15 +79,12 @@ class FlowController extends Controller
     }
 
     /**
-     * @param mixed[] $credentialSubject
      * @return View
      */
-    protected function returnFlowView(): View {
+    protected function returnFlowView(): View
+    {
         $state = $this->stateService->getFlowStateFromSession();
-        $credentialEnriched = $state->getCredentialData() !== null;
-
         return view('flow.index')
-            ->with('state', $state)
-            ->with('credentialEnriched', $credentialEnriched);
+            ->with('state', $state);
     }
 }

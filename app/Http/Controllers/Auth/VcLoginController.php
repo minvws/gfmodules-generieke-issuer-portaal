@@ -42,9 +42,7 @@ class VcLoginController extends Controller
         }
 
         return $this->loginResponseHandler->handleLoginResponse(
-            (object)[
-                "userinfo" => json_encode(["organization_code" => $session->getFirstCredentialSubject()['organization_code']]),
-            ]
+            (object)[$session->getFirstCredentialSubject()]
         );
     }
 }
