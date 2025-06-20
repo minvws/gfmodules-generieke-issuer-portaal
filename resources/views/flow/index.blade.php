@@ -25,22 +25,33 @@
                             <p class="error"><span>@lang('Error'):</span> {{ $message }}</p>
                             @enderror
                             @php
-                                $loginMethod = config('login_method.method');
-                                if ($loginMethod === 'oidc-vc') {
-                                    $loginRoute = route('vc.login');
-                                    $loginText = __('Login with') . ' VC';
-                                } else {
-                                    $loginRoute = route('noop.login');
-                                    $loginText = __('Login without authentication');
-                                }
+                                $enabledMethods = config('login_method.enabled_methods');
                             @endphp
-
                             <ul class="external-login">
-                                <li>
-                                    <a href="{{ $loginRoute }}">
-                                        {{ $loginText }}
-                                    </a>
-                                </li>
+                                @foreach($enabledMethods as $loginMethod)
+                                    @php
+                                        switch ($loginMethod) {
+                                            case 'openid4vp':
+                                                $loginRoute = route('vc.login');
+                                                $loginText = __('Login met') . ' OID4VC';
+                                                break;
+                                            case 'oidc':
+                                                $loginRoute = route('oidc.login');
+                                                $loginText = __('Login met') . ' OIDC';
+                                                break;
+                                            case 'mock':
+                                            default:
+                                                $loginRoute = route('mock.login');
+                                                $loginText = __('Login zonder authenticatie');
+                                                break;
+                                        }
+                                    @endphp
+                                    <li>
+                                        <a href="{{ $loginRoute }}">
+                                            {{ $loginText }}
+                                        </a>
+                                    </li>
+                                @endforeach
                             </ul>
                         @else
                             <p>Je bent ingelogd als organisatie: {{ $state->getUser()->getName() }}</p>
@@ -48,16 +59,15 @@
                     </div>
                 </li>
                 <li>
-                    <button aria-expanded="{{ $state->getUser() ? "true" : "false" }}" id="flow-credential">2.
-                        Enrich credential
+                    <button aria-expanded="{{ $state->getUser() ? "true" : "false" }}" id="flow-credential">2. Brondata ophalen
                     </button>
                     <div aria-labelledby="flow-credential">
                         @if(!$credentialEnriched)
                             <form action="{{ route('flow-credential.enrich') }}" method="POST">
                                 @csrf
                                 <fieldset {{ !$state->getUser() ? "disabled" : "" }}>
-                                    <p>Enrich credential met data uit KVK register</p>
-                                    <button type="submit">Enrich credential</button>
+                                    <p>Verrijk je credential met brondata.</p>
+                                    <button type="submit">Verrijk credential</button>
                                 </fieldset>
                             </form>
                         @else

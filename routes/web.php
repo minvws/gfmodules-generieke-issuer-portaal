@@ -7,7 +7,7 @@ use App\Http\Controllers\IndexController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\LogoutController;
 use App\Http\Controllers\Auth\VcLoginController;
-use App\Http\Controllers\Auth\NoopLoginController;
+use App\Http\Controllers\Auth\MockLoginController;
 
 /*
 |--------------------------------------------------------------------------
@@ -26,18 +26,21 @@ Route::post('/flow', [FlowController::class, 'retrieveCredential'])
     ->name('flow.retrieve-credential');
 Route::post('/flow/credential', [FlowController::class, 'enrichCredentialData'])->name('flow-credential.enrich');
 
-if (config('login_method.method') === 'oidc-vc') {
-    Route::middleware(['guest'])->group(function () {
+Route::middleware(['guest'])->group(function () {
+    $enabledMethods = config('login_method.enabled_methods', []);
+    if (in_array('openid4vp', $enabledMethods, true)) {
         Route::get('vc/login', [VcLoginController::class, 'login'])->name('vc.login');
         Route::get('vc/login/{sessionId}', [VcLoginController::class, 'session'])
             ->name('vc.login-session')
             ->middleware(['throttle:60,1']);
-    });
-} else {
-    Route::middleware(['guest'])->group(function () {
-        Route::get('noop/login', [NoopLoginController::class, 'login'])->name('noop.login');
-    });
-}
+    }
+    if (in_array('mock', $enabledMethods, true)) {
+        Route::get('mock/login', [MockLoginController::class, 'login'])->name('mock.login');
+    }
+    if (in_array('oidc', $enabledMethods, true)) {
+        Route::get('oidc/login', [\MinVWS\OpenIDConnectLaravel\Http\Controllers\LoginController::class, 'login'])->name('oidc.login');
+    }
+});
 
 Route::middleware(['auth'])
     ->group(function () {

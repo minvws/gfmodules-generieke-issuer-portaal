@@ -1,5 +1,5 @@
 <?php
 
 return [
-    'method' => env('LOGIN_METHOD', 'noop'), // default to 'noop' if not set
+    'enabled_methods' => explode(',', env('LOGIN_METHODS_ENABLED', 'openid4vp,mock,oidc')),
 ];

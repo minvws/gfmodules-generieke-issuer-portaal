@@ -8,7 +8,7 @@ use Illuminate\Routing\Controller;
 use MinVWS\OpenIDConnectLaravel\Http\Responses\LoginResponseHandlerInterface;
 use Symfony\Component\HttpFoundation\Response;
 
-class NoopLoginController extends Controller
+class MockLoginController extends Controller
 {
 
     public function __construct(
@@ -17,7 +17,7 @@ class NoopLoginController extends Controller
     }
 
     /**
-     * Handle a login request for the application when login method is 'none'.
+     * Handle the mock login method when enabled.
      */
     public function login(): Response
     {
