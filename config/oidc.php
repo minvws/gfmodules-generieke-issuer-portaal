@@ -107,7 +107,8 @@ return [
         /**
          * Enable or disable the login route.
          */
-        'enabled' => env('OIDC_LOGIN_ROUTE_ENABLED', true),
+        // 'enabled' => env('OIDC_LOGIN_ROUTE_ENABLED', true),
+        'enabled' => in_array('oidc', config('login_method.enabled_methods', []), true),
 
         /**
          * The url of the login route.

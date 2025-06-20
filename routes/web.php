@@ -37,9 +37,6 @@ Route::middleware(['guest'])->group(function () {
     if (in_array('mock', $enabledMethods, true)) {
         Route::get('mock/login', [MockLoginController::class, 'login'])->name('mock.login');
     }
-    if (in_array('oidc', $enabledMethods, true)) {
-        Route::get('oidc/login', [\MinVWS\OpenIDConnectLaravel\Http\Controllers\LoginController::class, 'login'])->name('oidc.login');
-    }
 });
 
 Route::middleware(['auth'])
