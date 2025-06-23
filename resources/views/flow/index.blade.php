@@ -81,7 +81,7 @@
             <form class="inline" action="{{ route('flow.retrieve-credential') }}" method="POST">
                 @csrf
                 <button
-                    type="submit" {{ $state->hasCredentialData() ? "" : "disabled" }}>
+                    type="submit" @disabled(!$state->hasCredentialData())>
                     Credential uitgeven
                 </button>
             </form>
