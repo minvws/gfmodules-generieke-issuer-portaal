@@ -55,7 +55,7 @@
                             </ul>
                         @else
                             <p>Je bent ingelogd als organisatie: </p>
-                            @dump($state->getUser()->getUserInfo())
+                            <x-recursive-table :data="$state->getUser()->getAsArray()" />
                         @endif
                     </div>
                 </li>

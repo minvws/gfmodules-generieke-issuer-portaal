@@ -42,7 +42,7 @@ class VcLoginController extends Controller
         }
 
         return $this->loginResponseHandler->handleLoginResponse(
-            (object)[$session->getFirstCredentialSubject()]
+            (object)$session->getFirstCredentialSubject()
         );
     }
 }
