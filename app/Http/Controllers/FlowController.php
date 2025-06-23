@@ -5,13 +5,12 @@ declare(strict_types=1);
 namespace App\Http\Controllers;
 
 use App\Dto\CredentialData;
-use App\Http\Requests\FlowCredentialDataRequest;
 use App\Services\EnrichService;
 use App\Services\FlowStateService;
 use App\Services\VCIssuerService;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
-use JsonException;
+use Exception;
 
 class FlowController extends Controller
 {
@@ -24,10 +23,7 @@ class FlowController extends Controller
 
     public function index(): View
     {
-        $credentialSubject = $this->getDefaultCredentialSubject();
-        $credentialSubject = $this->enrichService->enrich($credentialSubject);
-
-        return $this->returnFlowView($credentialSubject);
+        return $this->returnFlowView();
     }
 
     public function retrieveCredential(): RedirectResponse|View
@@ -49,56 +45,46 @@ class FlowController extends Controller
             ->with('credentialOfferUri', $issuanceUrl->getCredentialOfferUri());
     }
 
-    public function editCredentialData(): View
+    public function enrichCredentialData(): RedirectResponse
     {
-        $flow = $this->stateService->getFlowStateFromSession();
-        $credentialSubject = $flow->getCredentialData()?->getSubjectAsArray() ?? $this->getDefaultCredentialSubject();
+        $state = $this->stateService->getFlowStateFromSession();
+        if ($state->getUser() === null) {
+            return redirect()->route('index')
+                ->with('error', __('You must be logged in to retrieve a credential.'));
+        }
+        if ($state->hasCredentialData()) {
+            return redirect()
+                ->route('flow')
+                ->with('error', __('Credential already enriched'));
+        }
 
-        return $this->returnFlowView($credentialSubject, editCredentialData: true);
-    }
+        try {
+            $credentialSubject = $state->getUser()->getAsArray();
+            $credentialSubject = $this->enrichService->enrich($credentialSubject);
+            $cs = json_encode($credentialSubject, JSON_THROW_ON_ERROR | JSON_PRETTY_PRINT);
+        } catch (Exception $e) {
+            return redirect()
+                ->route('flow')
+                ->with('error', __('Could not enrich credential'))
+                ->with('error_description', __($e->getMessage()));
+        }
 
-    public function storeCredentialData(FlowCredentialDataRequest $request): RedirectResponse
-    {
         $data = new CredentialData(
-            subject: $request->validated('subject'),
+            subject: $cs,
         );
+
         $this->stateService->setCredentialDataInSession($data);
 
         return redirect()->route('flow');
     }
 
     /**
-     * @param mixed[] $credentialSubject
-     * @param bool $editCredentialData
-     * @param bool $editAuthorization
      * @return View
      */
-    protected function returnFlowView(
-        array $credentialSubject,
-        bool $editCredentialData = false,
-        bool $editAuthorization = false
-    ): View {
-        $state = $this->stateService->getFlowStateFromSession();
-        try {
-            $cs = json_encode($credentialSubject, JSON_THROW_ON_ERROR | JSON_PRETTY_PRINT);
-        } catch (JsonException) {
-            $cs = '';
-        }
-
-        return view('flow.index')
-            ->with('state', $state)
-            ->with('editCredential', $editCredentialData)
-            ->with('editAuthorization', $editAuthorization)
-            ->with('defaultCredentialSubject', $cs);
-    }
-
-    /**
-     * @return string[]
-     */
-    protected function getDefaultCredentialSubject(): array
+    protected function returnFlowView(): View
     {
-        return [
-            "organization_code" => '12341234'
-        ];
+        $state = $this->stateService->getFlowStateFromSession();
+        return view('flow.index')
+            ->with('state', $state);
     }
 }

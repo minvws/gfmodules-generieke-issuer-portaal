@@ -5,7 +5,7 @@ import '@minvws/manon/collapsible';
 // wait for the document to be loaded
 document.addEventListener('DOMContentLoaded', function () {
     bindLogoutClickHandler();
-    bindLoadCredentialIntoWalletForm();
+    bindPresentCredentialForm();
 });
 
 function bindLogoutClickHandler()
@@ -32,28 +32,32 @@ function bindLogoutClickHandler()
     });
 }
 
-function bindLoadCredentialIntoWalletForm()
+function bindPresentCredentialForm()
 {
     // check if load credential into wallet form exists
-    if (!document.querySelector('#load-credential-into-wallet-form')) {
+    if (!document.querySelector('#present-credential-form') && !document.querySelector('#load-credential-into-wallet-form')) {
         return
     }
 
     // bind form submit event
-    const form = document.querySelector('#load-credential-into-wallet-form');
+    const form = document.querySelector('#present-credential-form') || document.querySelector('#load-credential-into-wallet-form');
     form.addEventListener('submit', function (event) {
         // prevent default behaviour
         event.preventDefault();
 
-        // get the form data, the formdata contains wallet_url and credential_offer_uri.
+        // get the form data, the formdata contains wallet_url and present_credential_uri.
         const formData = new FormData(form);
 
         // redirect to the wallet app with the form data
         const walletUrl = formData.get('wallet_url');
+        const credentialPresentationUri = formData.get('present_credential_uri');
         const credentialOfferUri = formData.get('credential_offer_uri');
-
+        
         if (walletUrl && credentialOfferUri) {
             window.location.href = `${walletUrl}?credential_offer_uri=${encodeURIComponent(credentialOfferUri)}`;
+        } else if (walletUrl && credentialPresentationUri) {
+            // Strip `openid4vp://authorize`
+            window.location.href = `${walletUrl}${credentialPresentationUri.replace('openid4vp://authorize', '')}`;
         }
     });
 }

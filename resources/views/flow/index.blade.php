@@ -16,41 +16,64 @@
 
             <ul class="accordion">
                 <li>
-                    <button aria-expanded="true" id="flow-credential">1.
-                        Credential
+                    <button aria-expanded="true"
+                            id="flow-identification-authentication">1. Identificatie en Authenticatie
+                    </button>
+                    <div aria-labelledby="flow-identification-authentication">
+                        @if(!$state->getUser())
+                            @error('login')
+                            <p class="error"><span>@lang('Error'):</span> {{ $message }}</p>
+                            @enderror
+                            @php
+                                $enabledMethods = config('login_method.enabled_methods');
+                            @endphp
+                            <ul class="external-login">
+                                @foreach($enabledMethods as $loginMethod)
+                                    @php
+                                        switch ($loginMethod) {
+                                            case 'openid4vp':
+                                                $loginRoute = route('vc.login');
+                                                $loginText = __('Login met') . ' OID4VC';
+                                                break;
+                                            case 'oidc':
+                                                $loginRoute = route('oidc.login');
+                                                $loginText = __('Login met') . ' OIDC';
+                                                break;
+                                            case 'mock':
+                                            default:
+                                                $loginRoute = route('mock.login');
+                                                $loginText = __('Login zonder authenticatie');
+                                                break;
+                                        }
+                                    @endphp
+                                    <li>
+                                        <a href="{{ $loginRoute }}">
+                                            {{ $loginText }}
+                                        </a>
+                                    </li>
+                                @endforeach
+                            </ul>
+                        @else
+                            <p>Je bent ingelogd als organisatie: </p>
+                            <x-recursive-table :data="$state->getUser()->getAsArray()" />
+                        @endif
+                    </div>
+                </li>
+                <li>
+                    <button aria-expanded="{{ $state->getUser() ? "true" : "false" }}" id="flow-credential">2. Brondata ophalen
                     </button>
                     <div aria-labelledby="flow-credential">
-                        @if(!$state->getCredentialData() || $editCredential)
-                            <form action="{{ route('flow-credential.store') }}" method="POST">
+                        @if(!$state->hasCredentialData())
+                            <form action="{{ route('flow-credential.enrich') }}" method="POST">
                                 @csrf
-                                <fieldset>
-                                    <p>Geef hier je eigen credential uit.</p>
-                                    <div>
-                                        <label for="flow-credential-subject">Attributen</label>
-                                        <span
-                                            class="nota-bene">Attributen van het credential</span>
-                                        <div>
-                                            @error('subject')
-                                            <p class="error" id="flow-credential-subject-error-message">
-                                                <span>Foutmelding:</span> {{ $message }}
-                                            </p>
-                                            @enderror
-                                            <textarea
-                                                id="flow-credential-subject"
-                                                name="subject"
-                                                required
-                                                aria-describedby="flow-credential-subject-error-message"
-                                                rows="10"
-                                                >{{ old('subject', $state->getCredentialData()?->getSubject() ?? $defaultCredentialSubject) }}</textarea>
-                                        </div>
-                                    </div>
-                                    <button type="submit">Opslaan</button>
+                                <fieldset {{ !$state->getUser() ? "disabled" : "" }}>
+                                    <p>Verrijk je credential met brondata.</p>
+                                    <button type="submit">Verrijk credential</button>
                                 </fieldset>
                             </form>
                         @else
                             <p>U gaat een credential uitgeven met de volgende attributen.</p>
                             <x-recursive-table :data="$state->getCredentialData()->getSubjectAsArray()" />
-                            <a href="{{ route('flow-credential') }}" class="button ghost">Attributen wijzigen</a>
                         @endif
                     </div>
                 </li>
@@ -58,7 +81,7 @@
             <form class="inline" action="{{ route('flow.retrieve-credential') }}" method="POST">
                 @csrf
                 <button
-                    type="submit" {{ $state->getCredentialData() ? "" : "disabled" }}>
+                    type="submit" @disabled(!$state->hasCredentialData())>
                     Credential uitgeven
                 </button>
             </form>
