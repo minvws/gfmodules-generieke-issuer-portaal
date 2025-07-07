@@ -17,6 +17,6 @@
         "@minvws/manon": "^17.0.0-beta.2",
         "@minvws/manon-themes": "^17.0.0-rc.1",
         "@minvws/nl-rdo-rijksoverheid-ui-theme": "^0.1.0-beta.3",
-        "eslint": "^9.30.0"
+        "eslint": "^9.30.1"
     }
 }
