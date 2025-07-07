@@ -7,6 +7,7 @@ namespace App\Http\Controllers;
 use App\Dto\CredentialData;
 use App\Services\EnrichService;
 use App\Services\FlowStateService;
+use App\Services\RevocationService;
 use App\Services\VCIssuerService;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
@@ -18,6 +19,7 @@ class FlowController extends Controller
         protected FlowStateService $stateService,
         protected VCIssuerService $issuerService,
         protected EnrichService $enrichService,
+        protected RevocationService $revocationService,
     ) {
     }
 
