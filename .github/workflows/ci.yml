@@ -249,6 +249,7 @@ jobs:
         with:
           node-version: 20
           cache: 'npm'
+          registry-url: 'https://npm.pkg.github.com'
 
       - name: Log in to the Container registry
         uses: docker/login-action@v3
