@@ -244,10 +244,12 @@ jobs:
           path: vendor/
           key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
           restore-keys: ${{ runner.os }}-composer-
+
       - uses: actions/setup-node@v4
         with:
           node-version: 20
           cache: 'npm'
+
       - name: Log in to the Container registry
         uses: docker/login-action@v3
         with:
@@ -261,10 +263,12 @@ jobs:
         with:
           images: ghcr.io/${{ github.repository }}
 
+      - run: npm ci --ignore-scripts
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.REPO_READ_ONLY_TOKEN }}
+
       - name: Pre-build frontend
-        run: |
-          npm ci
-          npm run build
+        run: npm run build
 
       - name: Build and push Docker image
         uses: docker/build-push-action@v6
