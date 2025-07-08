@@ -15,6 +15,7 @@ use RuntimeException;
 class VCIssuerService
 {
     public function __construct(
+        protected RevocationService $revocationService,
         #[Config('issuer.name')]
         protected string $issuerName,
         #[Config('issuer.url')]
@@ -33,10 +34,17 @@ class VCIssuerService
      */
     public function issueCredential(array $subject = []): CredentialOfferUrl
     {
-        $response = Http::post($this->getIssuerUrl(), $this->buildIssueBody($subject));
+        $body = $this->buildIssueBody($subject);
+        // Add revocation information if revocation service is enabled
+        if ($this->revocationService->isEnabled()) {
+            $credentialStatus = $this->revocationService->getCredentialStatus();
+            $body['credentialData']['credentialStatus'] = $credentialStatus;
+        }
+
+        $response = Http::post($this->getIssuerUrl(), $body);
 
         if ($response->failed()) {
-            throw new RuntimeException('Failed to issue credential');
+            throw new RuntimeException('Failed to issue credential: ' . $response->body());
         }
 
         return new CredentialOfferUrl($response->body());
@@ -77,9 +85,6 @@ class VCIssuerService
             // Credential configuration id overeenkomend met credential-issuer-metadata.conf
             "credentialConfigurationId" => "MijnGeneriekeCredential_jwt_vc_json",
 
-            ## TODO: Check sd-jwt
-            #"credentialConfigurationId" => "MijnGeneriekeCredential_vc+sd-jwt",
-
             // Data van de credential
             "credentialData" => [
                 "@context" => [
@@ -93,9 +98,6 @@ class VCIssuerService
                 "issuer" => [
                     "name" => "Mijn Generieke Credentials Issuer Test"
                 ],
-//                "issuanceDate" => "2021-08-31T00:00:00Z", // Wordt door mapping overschreven
-//                "validFrom" => "2021-09-01T00:00:00Z", // Wordt door mapping overschreven
-//                "expirationDate" => "2031-08-31T00:00:00Z" // Wordt door mapping overschreven
             ],
 
             // Optionele mapping
@@ -107,11 +109,8 @@ class VCIssuerService
                 "credentialSubject" => [
                     "id" => "<subjectDid>"
                 ],
-//                "issuanceDate" => "<timestamp>",
-//                "validFrom" => "<timestamp>",
-//                "expirationDate" => "<timestamp-in:7d>" // Configureerbaar
             ],
-            "authenticationMethod" => "PRE_AUTHORIZED",
+            "authenticationMethod" => "PRE_AUTHORIZED"
         ];
     }
 

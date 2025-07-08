@@ -48,6 +48,8 @@ services:
                 condition: service_healthy
             caddy:
                 condition: service_started
+        ports:
+          - "7001:7001"
         networks:
             - sail
 
