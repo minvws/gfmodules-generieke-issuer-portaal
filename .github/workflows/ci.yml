@@ -253,7 +253,7 @@ jobs:
       - uses: actions/download-artifact@v4
         with:
           name: npm-build
-          path: build/
+          path: public/build/
 
       - name: Log in to the Container registry
         uses: docker/login-action@v3
