@@ -16,6 +16,8 @@ class EnrichService
     public function __construct(
         #[Config('source_connector.url')]
         protected string $sourceConnectorUrl,
+        #[Config('source_connector.endpoint')]
+        protected string $sourceConnectorEndpoint,
         #[Config('source_connector.mtls_cert')]
         protected ?string $mtlsCert,
         #[Config('source_connector.mtls_key')]
@@ -54,7 +56,7 @@ class EnrichService
 
         try {
             $client = new Client($config);
-            $response = $client->post('/enrich', [
+            $response = $client->post($this->sourceConnectorEndpoint, [
                 'json' => $data,
             ]);
         } catch (GuzzleException $e) {
