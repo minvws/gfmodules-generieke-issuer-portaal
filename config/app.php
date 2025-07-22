@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 return [
 
+    'force_https' => env('FORCE_HTTPS', false),
+
     /*
     |--------------------------------------------------------------------------
     | Application Name

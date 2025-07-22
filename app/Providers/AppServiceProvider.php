@@ -7,6 +7,7 @@ namespace App\Providers;
 use App\Services\AuthGuard;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\URL;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -28,6 +29,10 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        if (config('app.force_https')) {
+            URL::forceScheme('https');
+        }
+
         $this->bootAuth();
     }
 
