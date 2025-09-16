@@ -37,7 +37,7 @@
                     <div aria-labelledby="debug-accordion">
                         <p>Credential Offer URI:<a href="{{ $credentialOfferUri }}">{{ $credentialOfferUri }}</a></p>
                         @env('local')
-                            <p>Lokale wallet URL: http://localhost:8610/api/siop/initiateIssuance</p>
+                            <p>Lokale wallet URL: http://localhost:8562/api/siop/initiateIssuance</p>
                         @endenv
                     </div>
                 </li>
