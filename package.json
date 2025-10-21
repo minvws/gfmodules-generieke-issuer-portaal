@@ -10,7 +10,7 @@
     "devDependencies": {
         "laravel-vite-plugin": "^2.0.1",
         "sass": "^1.93.2",
-        "vite": "^7.1.9",
+        "vite": "^7.1.11",
         "concurrently": "^9.2.1"
     },
     "dependencies": {
