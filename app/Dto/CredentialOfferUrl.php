@@ -24,7 +24,14 @@ class CredentialOfferUrl
      */
     public function getCredentialOfferUri(): string
     {
-        $query = parse_url($this->url, PHP_URL_QUERY);
+        # Issue is that waltid now returns credential-offer://?query-string,
+        # which is not a valid url according to parse_url. which is why we
+        # now add ://foo? as a dummy hostname
+        $url = $this->url;
+        if (strpos($url, '://?') !== false) {
+            $url = preg_replace('~://\?~', '://foo?', $url, 1);
+        }
+        $query = parse_url((string)$url, PHP_URL_QUERY);
         if (!is_string($query)) {
             throw new InvalidArgumentException('Invalid URL: No query string found.');
         }
