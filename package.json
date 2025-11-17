@@ -9,13 +9,13 @@
     },
     "devDependencies": {
         "laravel-vite-plugin": "^2.0.1",
-        "sass": "^1.93.3",
+        "sass": "^1.94.0",
         "vite": "^7.2.2",
         "concurrently": "^9.2.1"
     },
     "dependencies": {
-        "@minvws/manon": "^17.0.0-beta.2",
-        "@minvws/manon-themes": "^17.0.0",
+        "@minvws/manon": "^17.1.0",
+        "@minvws/manon-themes": "^17.1.0",
         "@minvws/nl-rdo-rijksoverheid-ui-theme": "^0.1.0-rc.3",
         "eslint": "^9.39.1"
     }
