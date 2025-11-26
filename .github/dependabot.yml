@@ -21,6 +21,8 @@ updates:
         update-types: ["patch", "minor"]
         patterns:
           - "*"
+    cooldown:
+      default-days: 7
 
   # Maintain dependencies for npm
   - package-ecosystem: "npm"
@@ -35,6 +37,8 @@ updates:
         update-types: ["patch", "minor"]
         patterns:
           - "*"
+    cooldown:
+      default-days: 7
 
   # Maintain dependencies for Composer
   - package-ecosystem: "composer"
@@ -47,3 +51,5 @@ updates:
         update-types: ["patch", "minor"]
         patterns:
           - "*"
+    cooldown:
+      default-days: 7
