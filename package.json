@@ -16,7 +16,7 @@
     "dependencies": {
         "@minvws/manon": "^17.1.0",
         "@minvws/manon-themes": "^17.1.0",
-        "@minvws/nl-rdo-rijksoverheid-ui-theme": "^0.1.0-rc.3",
+        "@minvws/nl-rdo-rijksoverheid-ui-theme": "^0.1.0",
         "eslint": "^9.39.1"
     }
 }
