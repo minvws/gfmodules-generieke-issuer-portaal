@@ -9,7 +9,7 @@ jobs:
     runs-on: ubuntu-24.04
     steps:
       - name: Trigger CI suite
-        uses: minvws/gfmodules-action-trigger-ci@v1
+        uses: minvws/gfmodules-action-trigger-ci@a54d5b27e387d4f34b298f9acb448b0e71d8aaf4 #v1
         with:
           orac_htpasswd: '${{ secrets.ORAC_HTPASSWD }}'
           endpoint_url: '${{ secrets.ORAC_ENDPOINT }}'
