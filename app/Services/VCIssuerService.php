@@ -7,6 +7,7 @@ namespace App\Services;
 use App\Attributes\JWK as JWKAttribute;
 use App\Dto\CredentialOfferUrl;
 use Illuminate\Container\Attributes\Config;
+use Illuminate\Http\Client\Response;
 use Illuminate\Support\Facades\Http;
 use Jose\Component\Core\JWK;
 use JsonException;
@@ -41,6 +42,7 @@ class VCIssuerService
             $body['credentialData']['credentialStatus'] = $credentialStatus;
         }
 
+        /** @var Response $response */
         $response = Http::post($this->getIssuerUrl(), $body);
 
         if ($response->failed()) {
