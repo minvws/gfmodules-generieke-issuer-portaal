@@ -8,6 +8,7 @@ use App\Dto\PresentationSessionInitiated;
 use App\Dto\PresentationSessionResult;
 use Illuminate\Container\Attributes\Config;
 use Illuminate\Http\Client\ConnectionException;
+use Illuminate\Http\Client\Response;
 use Illuminate\Support\Facades\Http;
 use JsonException;
 use RuntimeException;
@@ -43,6 +44,7 @@ class VCVerifierService
             $additionalHeaders['errorRedirectUri'] = $errorRedirectUrl;
         }
 
+        /** @var Response $response */
         $response = Http::withHeaders([
             'authorizeBaseUrl' => 'openid4vp://authorize',
             'responseMode' => 'direct_post',
@@ -73,6 +75,7 @@ class VCVerifierService
      */
     public function getPresentationSession(string $sessionId): PresentationSessionResult
     {
+        /** @var Response $response */
         $response = Http::get($this->getSessionEndpointUrl($sessionId));
 
         if ($response->failed()) {
