@@ -22,10 +22,8 @@ class EnrichService
         protected ?string $mtlsCert,
         #[Config('source_connector.mtls_key')]
         protected ?string $mtlsKey,
-        #[Config('source_connector.mtls_cacert')]
-        protected ?string $mtlsCacert,
-        #[Config('source_connector.mtls_verify_peer_cert')]
-        protected bool $mtlsVerifyPeerCert = true,
+        #[Config('source_connector.verify_ca')]
+        protected ?string $verify_ca,
     ) {
     }
 
@@ -38,7 +36,7 @@ class EnrichService
     {
         $config = [
             'base_uri' => $this->sourceConnectorUrl,
-            'verify' => $this->mtlsVerifyPeerCert,
+            'verify' => $this->verify_ca,
             'timeout' => 10.0,
             'connect_timeout' => 5.0,
             'http_errors' => false,     // Disable exceptions for HTTP errors
@@ -51,7 +49,6 @@ class EnrichService
         if ($this->mtlsCert) {
             $config['cert'] = $this->mtlsCert;
             $config['ssl_key'] = $this->mtlsKey;
-            $config['verify'] = $this->mtlsCacert ?? true;
         }
 
         try {
