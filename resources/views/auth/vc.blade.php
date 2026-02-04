@@ -36,7 +36,7 @@
                     </button>
                     <div aria-labelledby="debug-accordion">
                         @env('local')
-                            <p>Lokale wallet URL: http://localhost:8562/api/siop/initiatePresentation</p>
+                            <p>Lokale wallet URL: http://localhost:{{env('WALTID_DEV_WALLET_FRONTEND_PORT')}}/api/siop/initiatePresentation</p>
                         @endenv
                     </div>
                 </li>
