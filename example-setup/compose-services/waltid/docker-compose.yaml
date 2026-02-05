@@ -1,0 +1,78 @@
+services:
+  issuer-api:
+    image: waltid/issuer-api:0.17.1
+    ports:
+      - 8560:80
+    environment:
+      baseUrl: "http://issuer-api"
+      webPort: 80
+    volumes:
+      - ./issuer-api/config:/waltid-issuer-api/config
+    networks:
+      gfmodules-generieke-issuer:
+        aliases:
+        - issuer-api
+
+  verifier-api:
+    image: waltid/verifier-api:0.17.1
+    ports:
+      - "8561:80"
+    environment:
+      baseUrl: "http://verifier-api"
+      webPort: 80
+    networks:
+      gfmodules-generieke-issuer:
+        aliases:
+        - verifier-api
+
+  wallet-api:
+    image: waltid/wallet-api:0.17.1
+    environment:
+      DB_HOST: "postgres"
+      DB_PORT: "5432"
+      DB_NAME: "wallet_api"
+      DB_USERNAME: "postgres"
+      DB_PASSWORD: "postgres"
+      WALLET_BACKEND_PORT: "80"
+    volumes:
+      - ./wallet-api/config:/waltid-wallet-api/config
+    depends_on:
+      postgres:
+        condition: service_healthy
+      caddy:
+        condition: service_started
+    networks:
+      gfmodules-generieke-issuer:
+        aliases:
+        - wallet-api
+
+  waltid-dev-wallet:
+    image: waltid/waltid-dev-wallet:0.17.1
+    environment:
+      PORT: 80
+    depends_on:
+      wallet-api:
+        condition: service_started
+      caddy:
+        condition: service_started
+    networks:
+      gfmodules-generieke-issuer:
+        aliases:
+        - waltid-dev-wallet
+
+  caddy:
+    image: docker.io/caddy:2
+    ports:
+      - "8562:80"
+    environment:
+      WALLET_BACKEND_PORT: 80
+      DEV_WALLET_FRONTEND_PORT: 80
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile
+    networks:
+      gfmodules-generieke-issuer:
+        aliases:
+        - caddy
+
+volumes:
+  wallet-api-db:

@@ -1,0 +1,85 @@
+[app]
+# Loglevel can be one of: debug, info, warning, error, critical
+loglevel=debug
+
+[ratelimit]
+# True if rate limiting is enabled
+enabled = False
+# Host for redis server
+redis_host = localhost
+# Port for redis server
+redis_port = 6379
+# Redis database number to use
+redis_db = 0
+# Default number of requests allowed
+default_reqs = 300
+# Default time window in seconds for rate limiting (sliding window)
+default_window = 60
+# Threshold for circuit breaker to trip
+circuit_break_threshold = 10
+# Time window in seconds for circuit breaker to monitor requests
+circuit_break_window = 60
+# Duration in seconds for which the circuit breaker remains open
+circuit_break_duration = 300
+# Number of requests allowed in half-open state before tripping the circuit breaker
+half_open_allowance = 5
+# Redis SSL configuration
+ssl=False
+cafile=
+cert=
+key=
+check_hostname=False
+
+
+[telemetry]
+# Telemetry is enabled or not
+enabled = False
+# Endpoint to GRPC server for telemetry
+endpoint = http://tracing:4317
+# Service name to use
+service_name = Source Connector API
+# Tracer name to use
+tracer_name = zmodules.service.source-connector-api
+
+[stats]
+# Statsd is enabled or not
+enabled = False
+# Host for statsd server
+host = graphite
+# Port for statsd server
+port = 8125
+# Module name for statsd
+module_name = source-connector-api
+
+[uvicorn]
+# If true, the api docs will be enabled
+swagger_enabled = True
+# Endpoint for swagger api docs
+docs_url = /docs
+# Endpoint for redoc api docs
+redoc_url = /redocs
+# Host for the uvicorn server
+host = 0.0.0.0
+# Port for the uvicorn server
+port = 80
+# Live reload for uvicorn server
+reload = True
+
+# SSL configuration
+use_ssl = False
+ssl_base_dir = secrets/ssl
+ssl_cert_file = server.cert
+ssl_key_file = server.key
+
+# Plugin configurations for ZorgAB
+[plugin_zorgab]
+enabled = false
+api_url = https://zab.test.aorta-zorg.nl/zab-ro/fhir
+mtls_cert = secrets/mtls-cert.pem
+mtls_key = secrets/mtls-key.pem
+verify_ca = secrets/uzi-ca.pem
+
+# Plugin configurations for KVK
+[plugin_kvk]
+enabled = true
+api_url = https://api.kvk.nl/api/v1/zoeken
