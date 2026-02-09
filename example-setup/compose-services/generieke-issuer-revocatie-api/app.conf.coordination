@@ -1,0 +1,60 @@
+[app]
+loglevel=debug
+
+[database]
+dsn=postgresql+psycopg://postgres:postgres@postgres:5432/revocation
+create_tables=false
+retry_backoff=0.1, 0.2, 0.4, 0.8, 1.6, 3.2, 4.8, 6.4, 10.0
+pool_size=5
+max_overflow=10
+pool_pre_ping=False
+pool_recycle=1800
+
+[telemetry]
+# Telemetry is enabled or not
+enabled = False
+# Endpoint to GRPC server for telemetry
+endpoint = http://tracing:4317
+# Service name to use
+service_name = Revocation Service
+# Tracer name to use
+tracer_name = gfmodules.service.revocation-service
+
+[stats]
+# Statsd is enabled or not
+enabled = False
+# Host for statsd server
+host = 127.0.0.1
+# Port for statsd server
+port = 8125
+# Module name for statsd
+module_name = revocation-service
+
+[uvicorn]
+# If true, the api docs will be enabled
+swagger_enabled = True
+# Endpoint for swagger api docs
+docs_url = /docs
+# Endpoint for redoc api docs
+redoc_url = /redocs
+# Host for the uvicorn server
+host = 0.0.0.0
+# Port for the uvicorn server
+port = 80
+# Live reload for uvicorn server
+reload = True
+
+# SSL configuration
+use_ssl = False
+ssl_base_dir = secrets/ssl
+ssl_cert_file = server.cert
+ssl_key_file = server.key
+
+
+[credential]
+# The JWK private key that is used to sign the bistring credential
+private_key_jwk = secrets/issuer-jwk.json
+# The DID that is used to sign the bistring credential. Should be the public jwk component of the private key
+did = did:jwk:
+# Size of the bitstring in kilobytes. Minimum is 16kb and should be enough for most use cases.
+bitstring_size_kb = 16

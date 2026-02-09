@@ -1,0 +1,27 @@
+---
+services:
+  source-connector-api:
+    build:
+      context: ../../../../gfmodules-source-connector-api
+      dockerfile: docker/Dockerfile
+      args:
+        NEW_UID: ${NEW_UID:-1000}
+        NEW_GID: ${NEW_GID:-1000}
+    environment:
+      - DO_NOT_USE_ON_PRODUCTION=I'm a fool if I run this application on a production environment.
+    ports:
+      - "8566:80"
+    volumes:
+      - ../../../../gfmodules-source-connector-api:/src
+    configs:
+      - source: source_connector_api_conf
+        target: /src/app.conf
+    stop_signal: SIGKILL
+    networks:
+      gfmodules-generieke-issuer:
+        aliases:
+        - source-connector-api
+
+configs:
+  source_connector_api_conf:
+    file: app.conf.coordination

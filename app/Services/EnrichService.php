@@ -23,7 +23,7 @@ class EnrichService
         #[Config('source_connector.mtls_key')]
         protected ?string $mtlsKey,
         #[Config('source_connector.verify_ca')]
-        protected ?string $verify_ca,
+        protected string|bool|null $verify_ca,
     ) {
     }
 

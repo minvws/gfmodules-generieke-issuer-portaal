@@ -1,7 +1,6 @@
 # Generiek Issuer Portaal
 
 PoC application to issue Verifiable Credentials.
-NOTE: This is a Proof of Concept application and not intended for production use.
 
 This project is part of the 'Generieke Functies' project of the Ministry of Health, Welfare and Sport of the Dutch government.
 
@@ -30,11 +29,34 @@ This project is part of the 'Generieke Functies' project of the Ministry of Heal
 
 ## Development setup
 
+> **Quickstart**
+> 
+> The easiest way is to start the example setup including the external dependencies as explained [here](#running-the-full-stack) by running the snippet below from this repository.
+> This will clone all repositories, including this repository and start the example setup.
+> 
+> ```bash
+> git clone https://github.com/minvws/gfmodules-generieke-issuer-portaal
+> git clone https://github.com/minvws/gfmodules-generieke-issuer-revocatie-api
+> git clone https://github.com/minvws/gfmodules-source-connector-api-private
+> cd gfmodules-generieke-issuer-portaal/example-setup
+>
+> docker compose up -d
+> ```
+> 
+> This will start the portaal on 'http://localhost:8564'
+>
+
+
+If you would like to run the generieke-issuer-portaal in laraval sail, follow the steps below.
+
+
 Requirements:
+
 - php
 - composer
 - npm
 - openssl
+
 
 Run the following commands to run this application.
 
@@ -48,6 +70,7 @@ npm run build
 vendor/bin/sail up -d
 ```
 
+
 The application is available at http://localhost:8600/flow.
 
 The wallet is available at http://localhost:8610.
@@ -56,20 +79,48 @@ It is possible to test the connection to the Issuer API using the following comm
 
 ```bash
 sail artisan app:make-credential
+
 ```
+
+### Running the full stack 
+if you wish to run the whole Verifiable Credentials stack including external applications make sure you have the following repository 
+available locally in the same parent directory as this one:
+
+- [generieke-issuer-revocatie-api](https://github.com/minvws/gfmodules-generieke-issuer-revocatie-api)
+- [source-connector-api](https://github.com/minvws/gfmodules-source-connector-api) 
+
+The directory layout should be like the following example:
+```bash 
+
+- parent_dir: 
+    - gfmodules-generieke-issuer-portaal
+    _ gfmodules-generieke-issuer-revocatie-api
+    _ gfmoudles-source-connector-api 
+```
+
+
+Run the stack from [example setup docker compose file](./example-setup/docker-compose.yml) using:
+
+```bash
+cd example-setup
+docker compose up 
+```
+
+All configurations related to the portal and the waltid can be found in [example-setup](./example-setup/) directory.
+Other related repositories configuration for revocation api and connector api can 
+be updated in the repo directory itself.
+Be aware, if the portaal contains a `.env` file, it's used instead of the .env.coordination file from the compose-services directory.
+
 
 ## Credential Signing
 
-To sign credentials, the application uses a private key. The private key can be generated using the following command:
+To sign credentials, the application uses a private key.
+This is currently only for development purposes. In production, the private key should be generated with a secure algorithm and should be stored in a secure location.
+The private key can be generated using the following command:
 
 ```bash
 openssl ecparam -name prime256v1 -genkey -noout -out secrets/key.pem
-
-# Currently not able to load the key with secp256k1
-#openssl ecparam -name secp256k1 -genkey -noout -out key.pem
 ```
-
-This is currently only for development purposes. In production, the private key should be generated with a secure algorithm and should be stored in a secure location.
 
 ## External services
 

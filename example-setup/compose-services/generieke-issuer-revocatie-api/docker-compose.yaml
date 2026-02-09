@@ -1,0 +1,30 @@
+---
+services:
+  generieke-issuer-revocatie-api:
+    build:
+      context: ../../../../gfmodules-generieke-issuer-revocatie-api
+      dockerfile: docker/Dockerfile
+      args:
+        NEW_UID: ${NEW_UID:-1000}
+        NEW_GID: ${NEW_GID:-1000}
+    environment:
+      - DO_NOT_USE_ON_PRODUCTION=I'm a fool if I run this application on a production environment.
+    ports:
+      - "8565:80"
+    volumes:
+      - ../../../../gfmodules-generieke-issuer-revocatie-api:/src
+    configs:
+      - source: revocatie_api_conf
+        target: /src/app.conf
+    stop_signal: SIGKILL
+    depends_on:
+      postgres:
+        condition: service_healthy
+    networks:
+      gfmodules-generieke-issuer:
+        aliases:
+        - generieke-issuer-revocatie-api
+
+configs:
+  revocatie_api_conf:
+    file: app.conf.coordination

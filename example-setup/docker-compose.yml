@@ -1,0 +1,32 @@
+---
+include:
+  - compose-services/waltid/docker-compose.yaml
+  - compose-services/generieke-issuer-portaal/docker-compose.yaml
+  - compose-services/generieke-issuer-revocatie-api/docker-compose.yaml
+  - compose-services/source-connector-api/docker-compose.yaml
+
+services:
+  postgres:
+    image: postgres:15
+    environment:
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_USER: postgres
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready --user postgres"]
+      start_period: 30s
+      interval: 30m
+    volumes:
+      - ./compose-services/create-db.sql:/docker-entrypoint-initdb.d/create-db.sql
+    ports:
+      - "8432:5432"
+    networks:
+      - gfmodules-generieke-issuer
+
+networks:
+  gfmodules-generieke-issuer:
+    driver: bridge
+    name: gfmodules-generieke-issuer
+
+secrets:
+  npmrc:
+    file: ~/.npmrc
