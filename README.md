@@ -37,7 +37,7 @@ This project is part of the 'Generieke Functies' project of the Ministry of Heal
 > ```bash
 > git clone https://github.com/minvws/gfmodules-generieke-issuer-portaal
 > git clone https://github.com/minvws/gfmodules-generieke-issuer-revocatie-api
-> git clone https://github.com/minvws/gfmodules-source-connector-api-private
+> git clone https://github.com/minvws/gfmodules-source-connector-api
 > cd gfmodules-generieke-issuer-portaal/example-setup
 >
 > docker compose up -d
