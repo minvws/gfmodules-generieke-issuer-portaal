@@ -37,6 +37,7 @@ class RevocationService
                 "type" => "BitstringStatusListEntry",
                 "statusPurpose" => "revocation",
                 "statusListIndex" => "{$revocationIndex}",
+                "statusSize" => 1,
                 "statusListCredential" => $this->revocationUrl,
             ];
         } catch (Exception $exception) {
