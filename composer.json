@@ -13,7 +13,7 @@
         "web-token/jwt-library": "^3.4"
     },
     "require-dev": {
-        "barryvdh/laravel-debugbar": "^3.15",
+        "barryvdh/laravel-debugbar": "^4.0",
         "barryvdh/laravel-ide-helper": "^3.5",
         "fakerphp/faker": "^1.23",
         "jorijn/laravel-security-checker": "^2.6",
