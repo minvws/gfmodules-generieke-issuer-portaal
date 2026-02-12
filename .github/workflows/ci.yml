@@ -35,8 +35,6 @@ jobs:
           php-version: ${{ matrix.php-versions }}
           extensions: zip
       - name: Install Dependencies
-        env:
-          COMPOSER_AUTH: '{"github-oauth": {"github.com": "${{ secrets.REPO_READ_ONLY_TOKEN }}"}}'
         run: composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
 
   # ------------------------------------------------------------------------------------
@@ -51,7 +49,7 @@ jobs:
           registry-url: 'https://npm.pkg.github.com'
       - run: npm ci --ignore-scripts
         env:
-          NODE_AUTH_TOKEN: ${{ secrets.REPO_READ_ONLY_TOKEN }}
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - run: npm run build
       - uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f  # v6.0.0
         with:
