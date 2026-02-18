@@ -32,6 +32,9 @@ This project is part of the 'Generieke Functies' project of the Ministry of Heal
 > **Quickstart**
 > 
 > The easiest way is to start the example setup including the external dependencies as explained [here](#running-the-full-stack) by running the snippet below from this repository.
+> 
+> The project has a dependency on the [rijksoverheid-ui-theme](https://github.com/minvws/nl-rdo-rijksoverheid-ui-theme). This theme is installed automatically, but needs a .npmrc file in the user home directory. (See [#Installation](https://github.com/minvws/nl-rdo-rijksoverheid-ui-theme?tab=readme-ov-file#installation) and [docker-compose](https://github.com/minvws/gfmodules-generieke-issuer-portaal/blob/7795a06eccc8548496d0ae517f919b490e402f94/example-setup/docker-compose.yml#L32))
+> 
 > This will clone all repositories, including this repository and start the example setup.
 > 
 > ```bash
