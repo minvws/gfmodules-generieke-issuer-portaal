@@ -55,7 +55,9 @@ class VCVerifierService
                     "format" => "jwt_vc_json",
                     "type" => $credentialType,
                 ]
-            ]
+            ],
+            "vp_policies" => ["signature", "expired", "not-before"],
+            "vc_policies" => ["signature", "expired", "not-before", "revoked-status-list" ],
         ]);
 
         if ($response->failed()) {
