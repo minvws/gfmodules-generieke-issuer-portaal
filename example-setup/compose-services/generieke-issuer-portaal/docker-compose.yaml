@@ -6,7 +6,9 @@ services:
       args:
         WWWGROUP: "${NEW_GID:-1000}"
     volumes:
-      - ${PWD}/compose-services/generieke-issuer-portaal:/opt/app/
+      - generieke-issuer-portaal-data:/opt/app
+      - ${PWD}/compose-services/generieke-issuer-portaal/init-sail.sh:/opt/app/init-sail.sh
+      - ${PWD}/compose-services/generieke-issuer-portaal/init.sh:/opt/app/init.sh
       - ${PWD}/../../gfmodules-generieke-issuer-portaal:/var/www/html
     ports:
       - "8564:80"
@@ -23,7 +25,7 @@ services:
     entrypoint: /opt/app/init.sh
     configs:
       - source: generieke_issuer_portaal_config
-        target: .env.coordination
+        target: /opt/app/.env.coordination
     secrets:
       - npmrc
     depends_on:
@@ -35,8 +37,11 @@ services:
     networks:
       gfmodules-generieke-issuer:
         aliases:
-        - generieke-issuer-portaal
+          - generieke-issuer-portaal
 
 configs:
   generieke_issuer_portaal_config:
     file: .env.coordination
+
+volumes:
+  generieke-issuer-portaal-data:
