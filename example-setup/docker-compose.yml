@@ -17,6 +17,7 @@ services:
       interval: 30m
     volumes:
       - ./compose-services/create-db.sql:/docker-entrypoint-initdb.d/create-db.sql
+      - postgres_data:/var/lib/postgresql/data
     ports:
       - "8432:5432"
     networks:
@@ -30,3 +31,6 @@ networks:
 secrets:
   npmrc:
     file: ~/.npmrc
+
+volumes:
+    postgres_data:
