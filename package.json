@@ -17,6 +17,9 @@
         "@minvws/manon": "^17.1.0",
         "@minvws/manon-themes": "^17.1.0",
         "@minvws/nl-rdo-rijksoverheid-ui-theme": "^0.1.0",
-        "eslint": "^9.39.2"
+        "eslint": "^10.0.0"
+    },
+    "overrides": {
+        "ajv": "^8.18.0"
     }
 }
