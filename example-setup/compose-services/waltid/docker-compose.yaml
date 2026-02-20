@@ -73,6 +73,3 @@ services:
       gfmodules-generieke-issuer:
         aliases:
         - caddy
-
-volumes:
-  wallet-api-db:
