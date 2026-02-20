@@ -23,7 +23,7 @@ services:
     entrypoint: /opt/app/init.sh
     configs:
       - source: generieke_issuer_portaal_config
-        target: .env.coordination
+        target: /opt/app/.env.coordination
     secrets:
       - npmrc
     depends_on:
