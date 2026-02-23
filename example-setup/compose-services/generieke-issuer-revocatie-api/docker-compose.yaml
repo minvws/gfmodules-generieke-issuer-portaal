@@ -9,13 +9,14 @@ services:
         NEW_GID: ${NEW_GID:-1000}
     environment:
       - DO_NOT_USE_ON_PRODUCTION=I'm a fool if I run this application on a production environment.
+      - FASTAPI_CONFIG_PATH=/opt/app.conf
     ports:
       - "8565:80"
     volumes:
       - ../../../../gfmodules-generieke-issuer-revocatie-api:/src
     configs:
       - source: revocatie_api_conf
-        target: /src/app.conf
+        target: /opt/app.conf
     stop_signal: SIGKILL
     depends_on:
       postgres:

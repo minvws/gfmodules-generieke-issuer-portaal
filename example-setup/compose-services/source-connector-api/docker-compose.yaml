@@ -9,13 +9,14 @@ services:
         NEW_GID: ${NEW_GID:-1000}
     environment:
       - DO_NOT_USE_ON_PRODUCTION=I'm a fool if I run this application on a production environment.
+      - FASTAPI_CONFIG_PATH=/opt/app.conf
     ports:
       - "8566:80"
     volumes:
       - ../../../../gfmodules-source-connector-api:/src
     configs:
       - source: source_connector_api_conf
-        target: /src/app.conf
+        target: /opt/app.conf
     stop_signal: SIGKILL
     networks:
       gfmodules-generieke-issuer:
