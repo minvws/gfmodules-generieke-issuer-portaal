@@ -31,23 +31,7 @@ This project is part of the 'Generieke Functies' project of the Ministry of Heal
 
 > **Quickstart**
 > 
-> The easiest way is to start the example setup including the external dependencies by running the snippet below.
-> 
-> The project has a dependency on the [rijksoverheid-ui-theme](https://github.com/minvws/nl-rdo-rijksoverheid-ui-theme). This theme is installed automatically, but needs a .npmrc file in the user home directory. (See [#Installation](https://github.com/minvws/nl-rdo-rijksoverheid-ui-theme?tab=readme-ov-file#installation) and [the docker-compose file](example-setup/docker-compose.yml))
-> 
-> This will clone all repositories, including this repository and start the example setup.
-> 
-> ```bash
-> git clone https://github.com/minvws/gfmodules-generieke-issuer-portaal
-> git clone https://github.com/minvws/gfmodules-generieke-issuer-revocatie-api
-> git clone https://github.com/minvws/gfmodules-source-connector-api
-> cd gfmodules-generieke-issuer-portaal/example-setup
->
-> docker compose up -d
-> ```
-> 
-> This will start the portaal on 'http://localhost:8564'
->
+> The easiest way to get started is by using the [example-setup](example-setup/). See the [example-setup README](example-setup/README.md) for prerequisites, configuration, and troubleshooting.
 
 
 If you would like to run the generieke-issuer-portaal in laraval sail, follow the steps below.
@@ -82,48 +66,7 @@ It is possible to test the connection to the Issuer API using the following comm
 
 ```bash
 sail artisan app:make-credential
-
 ```
-
-### Running the full stack 
-if you wish to run the whole Verifiable Credentials stack including external applications make sure you have the following repository 
-available locally in the same parent directory as this one:
-
-- [generieke-issuer-revocatie-api](https://github.com/minvws/gfmodules-generieke-issuer-revocatie-api)
-- [source-connector-api](https://github.com/minvws/gfmodules-source-connector-api) 
-
-The directory layout should be like the following example:
-```bash 
-
-- parent_dir: 
-    - gfmodules-generieke-issuer-portaal
-    _ gfmodules-generieke-issuer-revocatie-api
-    _ gfmoudles-source-connector-api 
-```
-
-
-Run the stack from [example setup docker compose file](example-setup/docker-compose.yml) using:
-
-```bash
-cd example-setup
-docker compose up 
-```
-
-All configurations related to the portal and the waltid can be found in [example-setup](example-setup) directory.
-Other related repositories configuration for revocation api and connector api can 
-be updated in the repo directory itself.
-
-> **Note on Persistent Volumes**
->
-> The example setup uses Docker volumes to persist the PostgreSQL database, configuration files, and generated keys.
-> On first run, the `.env` file and keys are automatically created and stored in the volume.
-> On subsequent runs, these persisted files are reused, ensuring your configuration remains consistent across container restarts.
->
-> To stop the containers and remove the volumes (which will delete all persisted data including the `.env` file and keys), use:
->
-> ```bash
-> docker compose down -v
-> ```
 
 
 ## Credential Signing
@@ -153,10 +96,7 @@ it is possible to load the credential in the walt.id dev wallet.
 The current implementation issues JSON-LD credentials that are secured with JOSE. This is based on the [Securing Verifiable Credentials using JOSE and COSE](https://www.w3.org/TR/vc-jose-cose/#securing-with-jose) specification.
 The used Issuer API also supports SD-JWT credentials.
 
-The opensource walt.id stack that is used has no support for revocation of credentials yet. See also https://github.com/walt-id/waltid-identity/issues/991. 
-It would be possible to set credential statuses by using an external status services, like:
-- https://github.com/digitalcredentials/status-service-db
-- https://github.com/eu-digital-identity-wallet/eudi-srv-statuslist-py
+The walt.id Verifier API is used to verify presented credentials, including revocation status checks against the StatusList credential provided by the revocation API. The following verification policies are applied: `signature`, `expired`, `not-before` for the Verifiable Presentation, and additionally `revoked-status-list` for the Verifiable Credentials.
 
 ## Contribution
 
