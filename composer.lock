@@ -1319,16 +1319,16 @@
         },
         {
             "name": "laravel/prompts",
-            "version": "v0.3.16",
+            "version": "v0.3.17",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/prompts.git",
-                "reference": "11e7d5f93803a2190b00e145142cb00a33d17ad2"
+                "reference": "6a82ac19a28b916ae0885828795dbd4c59d9a818"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/prompts/zipball/11e7d5f93803a2190b00e145142cb00a33d17ad2",
-                "reference": "11e7d5f93803a2190b00e145142cb00a33d17ad2",
+                "url": "https://api.github.com/repos/laravel/prompts/zipball/6a82ac19a28b916ae0885828795dbd4c59d9a818",
+                "reference": "6a82ac19a28b916ae0885828795dbd4c59d9a818",
                 "shasum": ""
             },
             "require": {
@@ -1372,22 +1372,22 @@
             "description": "Add beautiful and user-friendly forms to your command-line applications.",
             "support": {
                 "issues": "https://github.com/laravel/prompts/issues",
-                "source": "https://github.com/laravel/prompts/tree/v0.3.16"
+                "source": "https://github.com/laravel/prompts/tree/v0.3.17"
             },
-            "time": "2026-03-23T14:35:33+00:00"
+            "time": "2026-04-20T16:07:33+00:00"
         },
         {
             "name": "laravel/serializable-closure",
-            "version": "v2.0.11",
+            "version": "v2.0.12",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/serializable-closure.git",
-                "reference": "d1af40ac4a6ccc12bd062a7184f63c9995a63bdd"
+                "reference": "a6abb4e54f6fcd3138120b9ad497f0bd146f9919"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/serializable-closure/zipball/d1af40ac4a6ccc12bd062a7184f63c9995a63bdd",
-                "reference": "d1af40ac4a6ccc12bd062a7184f63c9995a63bdd",
+                "url": "https://api.github.com/repos/laravel/serializable-closure/zipball/a6abb4e54f6fcd3138120b9ad497f0bd146f9919",
+                "reference": "a6abb4e54f6fcd3138120b9ad497f0bd146f9919",
                 "shasum": ""
             },
             "require": {
@@ -1435,20 +1435,20 @@
                 "issues": "https://github.com/laravel/serializable-closure/issues",
                 "source": "https://github.com/laravel/serializable-closure"
             },
-            "time": "2026-04-07T13:32:18+00:00"
+            "time": "2026-04-14T13:33:34+00:00"
         },
         {
             "name": "laravel/tinker",
-            "version": "v3.0.0",
+            "version": "v3.0.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/tinker.git",
-                "reference": "cc74081282ba2e3dae1f0068ccb330370d24634e"
+                "reference": "4faba77764bd33411735936acdf30446d058c78b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/tinker/zipball/cc74081282ba2e3dae1f0068ccb330370d24634e",
-                "reference": "cc74081282ba2e3dae1f0068ccb330370d24634e",
+                "url": "https://api.github.com/repos/laravel/tinker/zipball/4faba77764bd33411735936acdf30446d058c78b",
+                "reference": "4faba77764bd33411735936acdf30446d058c78b",
                 "shasum": ""
             },
             "require": {
@@ -1502,9 +1502,9 @@
             ],
             "support": {
                 "issues": "https://github.com/laravel/tinker/issues",
-                "source": "https://github.com/laravel/tinker/tree/v3.0.0"
+                "source": "https://github.com/laravel/tinker/tree/v3.0.2"
             },
-            "time": "2026-03-17T14:53:17+00:00"
+            "time": "2026-03-17T14:54:13+00:00"
         },
         {
             "name": "league/commonmark",
@@ -5055,7 +5055,7 @@
         },
         {
             "name": "symfony/polyfill-ctype",
-            "version": "v1.35.0",
+            "version": "v1.36.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/polyfill-ctype.git",
@@ -5114,7 +5114,7 @@
                 "portable"
             ],
             "support": {
-                "source": "https://github.com/symfony/polyfill-ctype/tree/v1.35.0"
+                "source": "https://github.com/symfony/polyfill-ctype/tree/v1.36.0"
             },
             "funding": [
                 {
@@ -5138,7 +5138,7 @@
         },
         {
             "name": "symfony/polyfill-intl-grapheme",
-            "version": "v1.35.0",
+            "version": "v1.36.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/polyfill-intl-grapheme.git",
@@ -5196,7 +5196,7 @@
                 "shim"
             ],
             "support": {
-                "source": "https://github.com/symfony/polyfill-intl-grapheme/tree/v1.35.0"
+                "source": "https://github.com/symfony/polyfill-intl-grapheme/tree/v1.36.0"
             },
             "funding": [
                 {
@@ -5220,7 +5220,7 @@
         },
         {
             "name": "symfony/polyfill-intl-idn",
-            "version": "v1.35.0",
+            "version": "v1.36.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/polyfill-intl-idn.git",
@@ -5283,7 +5283,7 @@
                 "shim"
             ],
             "support": {
-                "source": "https://github.com/symfony/polyfill-intl-idn/tree/v1.35.0"
+                "source": "https://github.com/symfony/polyfill-intl-idn/tree/v1.36.0"
             },
             "funding": [
                 {
@@ -5307,7 +5307,7 @@
         },
         {
             "name": "symfony/polyfill-intl-normalizer",
-            "version": "v1.35.0",
+            "version": "v1.36.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/polyfill-intl-normalizer.git",
@@ -5368,7 +5368,7 @@
                 "shim"
             ],
             "support": {
-                "source": "https://github.com/symfony/polyfill-intl-normalizer/tree/v1.35.0"
+                "source": "https://github.com/symfony/polyfill-intl-normalizer/tree/v1.36.0"
             },
             "funding": [
                 {
@@ -5392,7 +5392,7 @@
         },
         {
             "name": "symfony/polyfill-mbstring",
-            "version": "v1.35.0",
+            "version": "v1.36.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/polyfill-mbstring.git",
@@ -5453,7 +5453,7 @@
                 "shim"
             ],
             "support": {
-                "source": "https://github.com/symfony/polyfill-mbstring/tree/v1.35.0"
+                "source": "https://github.com/symfony/polyfill-mbstring/tree/v1.36.0"
             },
             "funding": [
                 {
@@ -5477,7 +5477,7 @@
         },
         {
             "name": "symfony/polyfill-php80",
-            "version": "v1.35.0",
+            "version": "v1.36.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/polyfill-php80.git",
@@ -5537,7 +5537,7 @@
                 "shim"
             ],
             "support": {
-                "source": "https://github.com/symfony/polyfill-php80/tree/v1.35.0"
+                "source": "https://github.com/symfony/polyfill-php80/tree/v1.36.0"
             },
             "funding": [
                 {
@@ -5561,7 +5561,7 @@
         },
         {
             "name": "symfony/polyfill-php83",
-            "version": "v1.35.0",
+            "version": "v1.36.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/polyfill-php83.git",
@@ -5617,7 +5617,7 @@
                 "shim"
             ],
             "support": {
-                "source": "https://github.com/symfony/polyfill-php83/tree/v1.35.0"
+                "source": "https://github.com/symfony/polyfill-php83/tree/v1.36.0"
             },
             "funding": [
                 {
@@ -5641,7 +5641,7 @@
         },
         {
             "name": "symfony/polyfill-php84",
-            "version": "v1.35.0",
+            "version": "v1.36.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/polyfill-php84.git",
@@ -5697,7 +5697,7 @@
                 "shim"
             ],
             "support": {
-                "source": "https://github.com/symfony/polyfill-php84/tree/v1.35.0"
+                "source": "https://github.com/symfony/polyfill-php84/tree/v1.36.0"
             },
             "funding": [
                 {
@@ -5721,7 +5721,7 @@
         },
         {
             "name": "symfony/polyfill-php85",
-            "version": "v1.35.0",
+            "version": "v1.36.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/polyfill-php85.git",
@@ -5777,7 +5777,7 @@
                 "shim"
             ],
             "support": {
-                "source": "https://github.com/symfony/polyfill-php85/tree/v1.35.0"
+                "source": "https://github.com/symfony/polyfill-php85/tree/v1.36.0"
             },
             "funding": [
                 {
@@ -5801,7 +5801,7 @@
         },
         {
             "name": "symfony/polyfill-uuid",
-            "version": "v1.35.0",
+            "version": "v1.36.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/polyfill-uuid.git",
@@ -5860,7 +5860,7 @@
                 "uuid"
             ],
             "support": {
-                "source": "https://github.com/symfony/polyfill-uuid/tree/v1.35.0"
+                "source": "https://github.com/symfony/polyfill-uuid/tree/v1.36.0"
             },
             "funding": [
                 {
@@ -6698,23 +6698,23 @@
         },
         {
             "name": "voku/portable-ascii",
-            "version": "2.0.3",
+            "version": "2.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/voku/portable-ascii.git",
-                "reference": "b1d923f88091c6bf09699efcd7c8a1b1bfd7351d"
+                "reference": "d870a33f0f79d2b4579740b0620200221ee44aeb"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/voku/portable-ascii/zipball/b1d923f88091c6bf09699efcd7c8a1b1bfd7351d",
-                "reference": "b1d923f88091c6bf09699efcd7c8a1b1bfd7351d",
+                "url": "https://api.github.com/repos/voku/portable-ascii/zipball/d870a33f0f79d2b4579740b0620200221ee44aeb",
+                "reference": "d870a33f0f79d2b4579740b0620200221ee44aeb",
                 "shasum": ""
             },
             "require": {
-                "php": ">=7.0.0"
+                "php": ">=7.1.0"
             },
             "require-dev": {
-                "phpunit/phpunit": "~6.0 || ~7.0 || ~9.0"
+                "phpunit/phpunit": "~8.5 || ~9.6 || ~10.5 || ~11.5"
             },
             "suggest": {
                 "ext-intl": "Use Intl for transliterator_transliterate() support"
@@ -6744,7 +6744,7 @@
             ],
             "support": {
                 "issues": "https://github.com/voku/portable-ascii/issues",
-                "source": "https://github.com/voku/portable-ascii/tree/2.0.3"
+                "source": "https://github.com/voku/portable-ascii/tree/2.1.0"
             },
             "funding": [
                 {
@@ -6768,7 +6768,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2024-11-21T01:49:47+00:00"
+            "time": "2026-04-16T23:10:39+00:00"
         },
         {
             "name": "web-token/jwt-experimental",
@@ -7755,16 +7755,16 @@
         },
         {
             "name": "barryvdh/laravel-debugbar",
-            "version": "v4.2.4",
+            "version": "v4.2.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/fruitcake/laravel-debugbar.git",
-                "reference": "3c70910acfb35850b9304278b4af97fecb1128f4"
+                "reference": "68c3de788feb7047bea547b51253e71a54e7936a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/fruitcake/laravel-debugbar/zipball/3c70910acfb35850b9304278b4af97fecb1128f4",
-                "reference": "3c70910acfb35850b9304278b4af97fecb1128f4",
+                "url": "https://api.github.com/repos/fruitcake/laravel-debugbar/zipball/68c3de788feb7047bea547b51253e71a54e7936a",
+                "reference": "68c3de788feb7047bea547b51253e71a54e7936a",
                 "shasum": ""
             },
             "require": {
@@ -7772,7 +7772,7 @@
                 "illuminate/session": "^11|^12|^13.0",
                 "illuminate/support": "^11|^12|^13.0",
                 "php": "^8.2",
-                "php-debugbar/php-debugbar": "^3.7",
+                "php-debugbar/php-debugbar": "^3.7.2",
                 "php-debugbar/symfony-bridge": "^1.1"
             },
             "require-dev": {
@@ -7838,7 +7838,7 @@
             ],
             "support": {
                 "issues": "https://github.com/fruitcake/laravel-debugbar/issues",
-                "source": "https://github.com/fruitcake/laravel-debugbar/tree/v4.2.4"
+                "source": "https://github.com/fruitcake/laravel-debugbar/tree/v4.2.6"
             },
             "funding": [
                 {
@@ -7850,7 +7850,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2026-04-04T08:05:27+00:00"
+            "time": "2026-04-10T07:24:18+00:00"
         },
         {
             "name": "barryvdh/laravel-ide-helper",
@@ -9108,16 +9108,16 @@
         },
         {
             "name": "larastan/larastan",
-            "version": "v3.9.4",
+            "version": "v3.9.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/larastan/larastan.git",
-                "reference": "41db11d7d6417e7164482252c380bdc03fc41397"
+                "reference": "aa637ef3c9102490e0fa9a7ea4fbdbbce4471f34"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/larastan/larastan/zipball/41db11d7d6417e7164482252c380bdc03fc41397",
-                "reference": "41db11d7d6417e7164482252c380bdc03fc41397",
+                "url": "https://api.github.com/repos/larastan/larastan/zipball/aa637ef3c9102490e0fa9a7ea4fbdbbce4471f34",
+                "reference": "aa637ef3c9102490e0fa9a7ea4fbdbbce4471f34",
                 "shasum": ""
             },
             "require": {
@@ -9186,7 +9186,7 @@
             ],
             "support": {
                 "issues": "https://github.com/larastan/larastan/issues",
-                "source": "https://github.com/larastan/larastan/tree/v3.9.4"
+                "source": "https://github.com/larastan/larastan/tree/v3.9.5"
             },
             "funding": [
                 {
@@ -9194,7 +9194,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2026-04-02T07:08:56+00:00"
+            "time": "2026-04-11T20:10:30+00:00"
         },
         {
             "name": "laravel/pail",
@@ -9967,16 +9967,16 @@
         },
         {
             "name": "php-debugbar/php-debugbar",
-            "version": "v3.7.4",
+            "version": "v3.7.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/php-debugbar/php-debugbar.git",
-                "reference": "af82a54530c56919ce3c6fba1942a247ac9f6777"
+                "reference": "dbf77f48fa6e6b57ed57ae67aa047b2535697788"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/php-debugbar/php-debugbar/zipball/af82a54530c56919ce3c6fba1942a247ac9f6777",
-                "reference": "af82a54530c56919ce3c6fba1942a247ac9f6777",
+                "url": "https://api.github.com/repos/php-debugbar/php-debugbar/zipball/dbf77f48fa6e6b57ed57ae67aa047b2535697788",
+                "reference": "dbf77f48fa6e6b57ed57ae67aa047b2535697788",
                 "shasum": ""
             },
             "require": {
@@ -10053,7 +10053,7 @@
             ],
             "support": {
                 "issues": "https://github.com/php-debugbar/php-debugbar/issues",
-                "source": "https://github.com/php-debugbar/php-debugbar/tree/v3.7.4"
+                "source": "https://github.com/php-debugbar/php-debugbar/tree/v3.7.5"
             },
             "funding": [
                 {
@@ -10065,7 +10065,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2026-04-09T11:28:41+00:00"
+            "time": "2026-04-15T11:58:43+00:00"
         },
         {
             "name": "php-debugbar/symfony-bridge",
@@ -10357,11 +10357,11 @@
         },
         {
             "name": "phpstan/phpstan",
-            "version": "2.1.47",
+            "version": "2.1.50",
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/79015445d8bd79e62b29140f12e5bfced1dcca65",
-                "reference": "79015445d8bd79e62b29140f12e5bfced1dcca65",
+                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/d452086fb4cf648c6b2d8cf3b639351f79e4f3e2",
+                "reference": "d452086fb4cf648c6b2d8cf3b639351f79e4f3e2",
                 "shasum": ""
             },
             "require": {
@@ -10406,7 +10406,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2026-04-13T15:49:08+00:00"
+            "time": "2026-04-17T13:10:32+00:00"
         },
         {
             "name": "phpunit/php-code-coverage",
