@@ -1,0 +1,63 @@
+publiccodeYmlVersion: "0.5"
+name: Generiek Issuer Portaal
+url: https://github.com/minvws/gfmodules-generieke-issuer-portaal
+platforms:
+  - web
+categories:
+  - identity-management
+developmentStatus: development
+softwareType: standalone/web
+intendedAudience:
+  countries:
+    - NL
+  scope:
+    - government
+    - healthcare
+
+description:
+  nl:
+    shortDescription: >-
+      PoC-portaal voor het uitgeven van Verifiable Credentials binnen de
+      Generieke Functies Modules infrastructuur.
+    longDescription: |
+      Het Generiek Issuer Portaal is een proof-of-concept webapplicatie
+      waarmee Verifiable Credentials kunnen worden uitgegeven. De applicatie
+      maakt deel uit van het 'Generieke Functies' project van het Ministerie
+      van Volksgezondheid, Welzijn en Sport. Via het portaal kunnen
+      credentials worden aangemaakt en ondertekend met een EC-sleutelpaar.
+      De applicatie demonstreert hoe een issuer kan communiceren met een
+      digitale portemonnee (wallet) en credentials kan genereren.
+    features:
+      - Uitgeven van Verifiable Credentials
+      - Integratie met digitale portemonnee (wallet)
+      - Ondertekening van credentials via EC-sleutelpaar
+  en:
+    shortDescription: >-
+      PoC portal for issuing Verifiable Credentials within the Generieke
+      Functies Modules infrastructure.
+    longDescription: |
+      The Generiek Issuer Portaal is a proof-of-concept web application for
+      issuing Verifiable Credentials. The application is part of the
+      'Generieke Functies' project of the Ministry of Health, Welfare and
+      Sport. Through the portal, credentials can be created and signed using
+      an EC key pair. The application demonstrates how an issuer can
+      communicate with a digital wallet and generate credentials.
+    features:
+      - Issuing Verifiable Credentials
+      - Integration with digital wallet
+      - Credential signing via EC key pair
+
+legal:
+  license: EUPL-1.2
+  mainCopyrightOwner: Ministerie van Volksgezondheid, Welzijn en Sport
+
+maintenance:
+  type: internal
+  contacts:
+    - name: irealisatie.nl
+      email: helpdesk@irealisatie.nl
+
+localisation:
+  localisationReady: false
+  availableLanguages:
+    - nl
